@@ -25,7 +25,7 @@ SECRET_KEY = '_pev-#e-6ee@mmqcc&-r!&qe7y6!fit=cdklz1+sp^m%#!fz$g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mmaleka.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
