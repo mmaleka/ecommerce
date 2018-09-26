@@ -1,0 +1,44 @@
+.searchWidth {
+    background-color: #eee;
+}
+
+.search_text {
+    padding: 10px 10px 10px 20px;
+}
+
+.navbar {
+  background-color: teal;
+  color: #EEE5E9;
+}
+
+.navbar-toggler {
+  background-color: #111;
+}
+
+.navbar-brand {
+    font-family: Comic Sans MS;
+}
+
+.fa-shopping-cart {
+    color: #eee;
+}
+
+.catergories {
+    padding: 10px 10px 10px 20px;
+}
+
+.catergoriesBtn:hover {
+    background-color: #d1647d;
+    color: #F5F5F5;
+}
+
+.zoom {
+    transition: transform .2s;
+    margin: 0 auto;
+}
+
+.zoom:hover {
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Safari 3-8 */
+    transform: scale(1.5);
+}

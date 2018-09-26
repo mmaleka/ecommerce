@@ -43,7 +43,11 @@
                         <tr>
                             <td>
                                 {% for productsImage in productsImages %}
-                                    <img src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}" alt="..." style="height: 130px; width: auto">
+                                <!--<h1>{{ product.id }}</h1>-->
+                                <!--<h1>{{ productsImage.product.id }}</h1>-->
+                                    {% if productsImage.product.id == product.id %}
+                                        <img src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}" alt="..." style="height: 130px; width: auto">
+                                    {% endif %}
                                 {% endfor %}
                             </td>
                             <td>{{ product.name }}</td>

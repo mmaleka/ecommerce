@@ -5,6 +5,7 @@ from cart.forms import CartAddProductForm
 
 
 def product_list(request, category_slug=None):
+    search_term = ''
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
@@ -13,13 +14,16 @@ def product_list(request, category_slug=None):
         category = get_object_or_404(Category, slug=category_slug)
         products = Product.objects.filter(category=category)
 
-
+    if 'search' in request.GET:
+        search_term = request.GET['search']
+        products = products.filter(name__icontains=search_term)
 
     context = {
         'category': category,
         'categories': categories,
         'products': products,
-        'productsImages': productsImage
+        'productsImages': productsImage,
+        'search_term': search_term
 
     }
     return render(request, 'shop/product/list.html', context)
