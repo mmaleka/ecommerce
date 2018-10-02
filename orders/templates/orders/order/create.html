@@ -1,36 +1,68 @@
 {% extends 'shop/base.html' %}
+{% load crispy_forms_tags %}
+{% crispy form form.helper %}
 {% load static %}
 {% block title %}
     Your Shopping Cart| Checkout
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row" style="margin-top: 6%">
-            <div class="col-md-8">
-                <h4 class="page-header">Checkout</h4>
-                <form action="." method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}<br>
-                    <input type="submit" class="btn btn-primary" value="Submit order">
-                </form>
-            </div>
-            <div class="col-md-4">
-                <div class="page-header">
-                    Your Order
-                </div>
-                <ul class="list-group">
-                    {% for item in cart %}
-                        <li class="list-group-item">
-                        {{ item.quantity }}x {{ item.product.name }}
-                        <span>Zar. {{ item.total_price }}</span>
-                        </li>
-                    {% endfor %}
 
-                <li class="list-group-item active">Total Cost: Zar. {{ cart.get_total_price }}</li>
-                </ul>
+<div class="container">
 
+  <div class="row justify-content-around">
+
+    <div class="col-sm-12 col-md-6 col-lg-6 text-center">
+
+      <h5>My Shipping Adress</h5>
+
+      {% if request.user != 'AnonymousUser' %}
+
+        {% if request.user.is_authenticated %}
+
+        <form action="." method="post" class="myFormCheckOut">
+            {% csrf_token %}
+            <p>
+                {{ form|crispy }}
+            </p>
+
+            <div class="row justify-content-left">
+              <div class="col-sm-12 col-md-3 col-lg-3 text-center">
+                <input type="submit" class="btn btn-primary btn-block" value="Submit order">
+              </div>
             </div>
+
+        </form>
+
+        {% else %}
+
+        <div class="well well-lg">
+          <h3>Please <a href="{% url 'accounts:login_view' %}">Sign in</a> or <a href="{% url 'accounts:register_view' %}">Sign Up</a> to continue</h3>
         </div>
+
+        {% endif %}
+
+      {% endif %}
+
     </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-6 text-center">
+
+      <h5>My Order</h5>
+
+        <ul class="list-group myListGruopCheckOut">
+          {% for item in cart %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+           <p>{{ item.product.name }} x {{ item.quantity }}</p>
+            <p><span class="badge badge-primary badge-pill">R {{ item.total_price }}</span></p>
+          </li>
+          {% endfor %}
+        </ul>
+
+    </div>
+
+  </div>
+
+</div>
+
 {% endblock %}

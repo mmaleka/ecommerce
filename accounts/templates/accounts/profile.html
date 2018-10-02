@@ -1,0 +1,69 @@
+{% extends 'shop/base.html' %}
+{% load staticfiles %}
+{% block title %}
+    My Account
+{% endblock %}
+<!--{% block profile %} {{ user }} - {{ block.super }}{% endblock profile %}-->
+
+{% block content %}
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-sm-12 col-md-12 col-lg-12 text-center" style="padding: 20px">
+      <h4>Hello {{ user.first_name }}, here are your orders</h4>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-12">
+
+      {% for order in orders %}
+        <div class="card">
+          <div class="card-header myCard2">
+            <div class="row">
+              <div class="col-sm-12 col-md-4 col-lg-4 text-left">
+                <p class="font-weight-bold">Order #{{ order.id }}</p>
+              </div>
+              <div class="col-sm-12 col-md-4 col-lg-4">
+                Ordered {{ order.created }}
+              </div>
+              <div class="col-sm-12 col-md-4 col-lg-4">
+                <p class="font-weight-bold">Status {{order.status}}</p>
+              </div>
+
+            </div>
+          </div>
+          <ul class="list-group list-group-flush">
+
+            {% for orderItem in orderItems %}
+              {% if order.id == orderItem.order.id %}
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                      <img src="http://placehold.it/130x100" alt="">
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                      <p class="font-weight-bold">{{ orderItem.product }}</p>
+                      <p class="text-muted">Qty: {{ orderItem.quantity }}</p>
+                      <p class="font-weight-bold">R {{ orderItem.price }}</p>
+                    </div>
+                  </div>
+                </li>
+              {% endif %}
+            {% endfor %}
+
+
+
+
+          </ul>
+        </div>
+        <br>
+      {% endfor %}
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

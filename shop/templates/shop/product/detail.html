@@ -1,4 +1,5 @@
 {% extends 'shop/base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 
 {% block title %}
@@ -7,35 +8,84 @@
 
 {% block content %}
 
+<div class="container my-container">
 
-<div class="card-body">
-    <div class="col-md-6 text-right">
-        {% for productsImage in productsImages %}
-            {% if productsImage.product.id == product.id %}
-                <img src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}" alt="..." style="height: 130px; width: auto">
+  <div class="row justify-content-around">
+
+    <div class="col-sm-12 col-md-4 col-lg-4 text-center">
+
+      <div class="row justify-content-around productImage">
+          {% for productsImage in productsImages %}
+            {% if productsImage.product.id  == product.id %}
+            <img id="{{ productsImage.id }}"
+            width="350" height="300"
+            class="card-img-top"
+            src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
+            alt="">
             {% endif %}
+          {% endfor %}
+      </div>
+      <div class="row justify-content-center">
+        {% for productsImage in productsImages %}
+          {% if productsImage.product.id  == product.id %}
+          <div class="col my-col-small">
+            <img id="{{ productsImage.id }}"
+            width="80" height="70"
+            class="card-img-top"
+            src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
+            alt="">
+          </div>
+          {% endif %}
         {% endfor %}
+      </div>
+
     </div>
 
-    <!--<div class="col-md-6 text-right">-->
-        <!--<img src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}" alt="..." style="height: 170px; width: auto">-->
-    <!--</div>-->
+    <div class="col-sm-12 col-md-4 col-lg-4 text-left">
 
+      <h3 class="font-weight-bold text-capitalize">{{ product.name }}</h3>
+      <br>
+      <!-- {{ product.get_absolute_url }} -->
+      <a class="facebookShare" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">Share on Facebook</a>
+      <hr class="style1">
 
-    <div class="col-md-6" style="padding-left: 20px">
-        <h3>{{ product.name }}</h3>
-        <h6><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h6>
-        <p class="text-muted">Zar. {{ product.price }}</p>
-        <form action="{% url "cart:cart_add" product.id %}" method="post">
-            {% csrf_token %}
-            {{ cart_product_form }}
-            <input type="submit" value="add to cart" class="btn btn-primary">
-        </form>
-        <p>{{ product.description|safe|linebreaksbr }}</p>
+      <h2 class="font-weight-bold text-capitalize text-danger">R {{ product.price }}</h2>
+      <h5 class="my-text">{{ product.stock}} item{{ product.stock|pluralize }} left</h5>
+      <h5 class="my-text">Shipping:  {{ product.shipping }}</h5>
+      <h5 class="my-text">Warranty:  {{ product.warranty }}</h5>
+      <h5 class="my-text">Barcode:  {{ product.barcode }}</h5>
+      <h5 class="my-text">Hassle-Free Exchanges & Returns for 30 Days</h5>
+
     </div>
 
+    <div class="col-sm-12 col-md-4 col-lg-4 text-center">
+
+      <div class="card">
+
+        <div class="card-body">
+
+          <form action="{% url "cart:cart_add" product.id %}" method="post">
+              {% csrf_token %}
+              <p>
+                  {{ cart_product_form|crispy }}
+              </p>
+              <button class="btn btn-primary btn-block"><i class="fa fa-lg fa-shopping-cart"></i> Add to cart</button>
+          </form>
+
+          <p>{{ product.description|safe|linebreaksbr }}</p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </div>
 
+
+
+<script src="{% static 'shop/js/shop_JS.js' %}"></script>
 
 {% endblock %}

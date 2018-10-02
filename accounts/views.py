@@ -7,6 +7,7 @@ from django.contrib.auth import (
 
 from .forms import UserLoginForm
 # from posts.models import Post
+from orders.models import Order, OrderItem
 from accounts.forms import RegistrationForm
 from django.shortcuts import render, get_object_or_404, redirect
 # Create your views here.
@@ -64,32 +65,17 @@ def logout_view(request):
 
 
 def profile_view(request):
+
+    orders = Order.objects.filter(first_name=request.user.first_name)
+    orderItems = OrderItem.objects.all()
+
+    print("orderItems: ", orderItems)
+
     context = {
         'title': 'User Profile',
         'user': request.user,
+        'orders': orders,
+        'orderItems':orderItems,
     }
 
-    return render(request, "posts/profile.html", context)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return render(request, "accounts/profile.html", context)

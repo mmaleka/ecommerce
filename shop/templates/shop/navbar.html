@@ -13,11 +13,11 @@
   </head>
 
   <body class="mainWindow">
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <a class="navbar-brand" href="{% url 'shop:product_list' %}">
         <img src="https://coreui.io/docs/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
         <!--Stuff-Online-->
-        Stuff-Online
+        Students-Love-This.com
         </a>
         <!--<a class="navbar-brand" href="{% url 'shop:product_list' %}">Stuff-Online</a>-->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,64 +26,73 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <!-- <li class="nav-item active">
                 <a id="contact">Call: 082 904 6234</a>
-            </li>
+            </li> -->
 
             </ul>
             <ul class="navbar-nav">
             {% if request.user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="#"> Hi {{ request.user.username }}</a>
+                <a class="nav-link" href="#">Hi {{ request.user.username }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'accounts:logout_view' %}">Logout</a>
+                <a class="nav-link" href="{% url 'accounts:profile_view' %}">My Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'accounts:logout_view' %}">Sign Out</a>
             </li>
             {% else %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'accounts:login_view' %}">Login</a>
+                <a class="nav-link" href="{% url 'accounts:login_view' %}">Sign In</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'accounts:register_view' %}">Register</a>
+                <a class="nav-link" href="{% url 'accounts:register_view' %}">Sign Up</a>
             </li>
             {% endif %}
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url "cart:cart_detail" %}">
-                        <i class="fa fa-lg fa-shopping-cart">
-                            {% with totail_items=cart|length %}
-                                {% if cart|length > 0 %}
-                                    {{ totail_items }}
-                                {% endif %}
-                            {% endwith %}
-                        </i>
+                      <i class="fa fa-lg fa-shopping-cart"></i>
+                      <span class="badge badge-success">
+                        {% with totail_items=cart|length %}
+                          {% if cart|length > 0 %}
+                              {{ totail_items }}
+                          {% else %}
+                              0
+                          {% endif %}
+                        {% endwith %}</span>
                     </a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <div class="w-100 p-3 searchWidth">
+    <!-- <div class="w-100 p-3 searchWidth"> -->
 
-        <form class="form-inline my-2 my-lg-0">
-            <div class="row">
-               <div class="col-md-12">
-                <div class="input-group input-group-lg">
-                  <input type="text"
-                         name="search"
-                         class="form-control input-lg"
-                         id="search-church"
-                         value="{{ request.GET.search }}"
-                         placeholder="Search">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default btn-lg" type="submit">Search</button>
-                  </span>
+    <div class="row justify-content-around searchWidth">
+      <div class="col-sm-8 col-md-6 col-lg-6 text-center">
+        <form>
+          <form class="form-inline my-2 my-lg-0">
+              <div class="row">
+                 <div class="col-md-12">
+                  <div class="input-group input-group-lg">
+                    <input type="text"
+                           name="search"
+                           class="form-control input-lg"
+                           id="search-church"
+                           value="{{ request.GET.search }}"
+                           placeholder="Search">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default btn-lg" type="submit"><i class="fa fa-lg fa-search"></i></button>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-        </form>
+          </form>
+      </div>
     </div>
 
     <!--<div class="container">-->

@@ -12,6 +12,14 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
+    status_Choices = (
+    ('PP', 'Processing payment'),
+    ('PR', 'Payment received'),
+    ('PO', 'Processing order'),
+    ('ID', 'Items dispatched'),
+    ('IR', 'Items received'),
+    )
+    status = models.CharField(max_length=2, choices=status_Choices, default='Processing payment')
 
     class Meta:
         ordering = ('-created', )

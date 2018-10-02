@@ -1,4 +1,5 @@
 from django import forms
+from crispy_forms.helper import FormHelper
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import (
     authenticate,
@@ -59,30 +60,3 @@ class RegistrationForm(UserCreationForm):
             user.save()
 
         return user
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

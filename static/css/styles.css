@@ -1,9 +1,18 @@
 .searchWidth {
     background-color: #eee;
+    padding: 10px 10px 10px 20px;
 }
 
 .search_text {
     padding: 10px 10px 10px 20px;
+}
+
+.card-product_list {
+  padding: 5px;
+  /* margin-top: 10px */
+}
+.card-product_list:hover {
+  border: 2px solid lightgrey;
 }
 
 .navbar {
@@ -41,4 +50,73 @@
     -ms-transform: scale(1.5); /* IE 9 */
     -webkit-transform: scale(1.5); /* Safari 3-8 */
     transform: scale(1.5);
+}
+
+.carousel_image {
+  padding: 20px 0px 20px 0px;
+}
+
+.body {
+  padding: 30px;
+}
+
+.my-container {
+  padding-top: 50px;
+}
+
+.my-row {
+  padding: 5px;
+}
+
+.my-col {
+  padding: 5px;
+}
+
+.my-col-small {
+  border: 1px solid lightgrey;
+  margin: 5px;
+}
+
+.my-col-mainImage {
+  padding: 10px;
+}
+
+.my-row-mainImage {
+  justify-content:center;
+}
+
+.my-text {
+  padding-top: 10px;
+}
+
+.myCard {
+  padding: 20px
+}
+
+.btn-Checkout {
+  margin-bottom: 10px
+}
+
+.myListGruopCheckOut {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.myFormCheckOut {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.myCard2 {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.vl {
+    border-left: 6px solid green;
+    height: 500px;
+    position: absolute;
+    left: 50%;
+    margin-left: -3px;
+    top: 0;
 }

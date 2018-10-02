@@ -36,6 +36,7 @@ STATICFILES_DIRS = [
 
 INSTALLED_APPS = [
     'shop.apps.ShopConfig',
+    'addBanner.apps.AddbannerConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
     'accounts.apps.AccountsConfig',

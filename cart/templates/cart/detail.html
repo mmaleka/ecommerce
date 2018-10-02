@@ -9,72 +9,135 @@
 
 {% block content %}
 
-<div id="container">
-    <div class="row" style="margin-top: 6%">
-        <h2>Your Shopping Cart
-            <span class="badge pull-right">
-                {% with totail_items=cart|length %}
-                    {% if cart|length > 0 %}
-                        My Shopping Order:
-                        <a href="{% url "cart:cart_detail" %}" style="color: #ffffff">
-                            {{ totail_items }} item {{ totail_items|pluralize }}, Kshs. {{ cart.get_total_price }}
-                        </a>
-                        {% else %}
-                        Your cart is empty.
-                    {% endif %}
-                {% endwith %}
-            </span>
-        </h2>
-        <table class="table table-striped table-hover">
-                <thead style="background-color: #5AC8FA">
-                    <tr>
-                        <th>Image</th>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Remove</th>
-                        <th>Unit Price</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-            <tbody>
 
-                {% for item in cart %}
-                    {% with product=item.product  %}
-                        <tr>
-                            <td>
-                                {% for productsImage in productsImages %}
-                                <!--<h1>{{ product.id }}</h1>-->
-                                <!--<h1>{{ productsImage.product.id }}</h1>-->
-                                    {% if productsImage.product.id == product.id %}
-                                        <img src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}" alt="..." style="height: 130px; width: auto">
-                                    {% endif %}
-                                {% endfor %}
-                            </td>
-                            <td>{{ product.name }}</td>
-                            <td>
-                                <form action="{% url "cart:cart_add" product.id %}" method="post">
-                                    {% csrf_token %}
-                                    {{ item.update_quantity_form.quantity }}
-                                    {{ item.update_quantity_form.update }}
-                                    <input type="submit" value="Update" class="btn btn-info">
-                                </form>
-                            </td>
-                            <td>
-                                <a href="{% url "cart:cart_remove" product.id %}">Remove</a>
-                            </td>
-                            <td>Zar. {{ item.price }}</td>
-                            <td>Zar. {{ item.total_price }}</td>
-                        </tr>
-                    {% endwith %}
-                {% endfor %}
-            </tbody>
-        </table>
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+      <p>MY SHOPPING CART: <span class="badge">
+          {% with totail_items=cart|length %}
+              {% if cart|length > 0 %}
+                  My Shopping Order:
+                  <a href="{% url "cart:cart_detail" %}" style="">
+                      {{ totail_items }} item{{ totail_items|pluralize }}, R {{ cart.get_total_price }}
+                  </a>
+                  {% else %}
+                  Your cart is empty.
+              {% endif %}
+          {% endwith %}
+      </span></p>
+      <hr class="style1">
     </div>
-        <p class="text-right">
-            <a href="{% url "shop:product_list" %}" class="btn btn-default">Continue Shopping</a>
-            <a href="{% url "orders:order_create" %}" class="btn btn-primary">Checkout</a>
-        </p>
+
+  </div>
+
+  {% for item in cart %}
+      {% with product=item.product  %}
+        <div class="row justify-content-around">
+
+            <div class="col-sm-12 col-md-3 col-lg-3 text-center productImage">
+              {% for productsImage in productsImages %}
+                {% if productsImage.product.id  == product.id %}
+                <img id="{{ productsImage.id }}"
+                width="130" height="200"
+                class="card-img-top"
+                src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
+                alt="">
+                {% endif %}
+              {% endfor %}
+            </div>
+
+            <div class="col-sm-12 col-md-3 col-lg-3 text-center">
+
+              <h6 class="my-text">{{ product.name }}</h6>
+              <h6 class="font-weight-bold text-capitalize text-dark">R {{ item.price }}</h6>
+              <form action="{% url "cart:cart_add" product.id %}" method="post">
+                  {% csrf_token %}
+                  {{ item.update_quantity_form.quantity }}
+                  {{ item.update_quantity_form.update }}
+                  <button type="submit" class="btn btn-info">
+                    <i class="fa fa-lg far fa-pencil"></i>
+                  </button>
+                  <a href="{% url "cart:cart_remove" product.id %}" class="btn btn-info" role="button">
+                    <i class="fa fa-lg fa-trash"></i>
+                  </a>
+              </form>
+
+              <h6 class="font-weight-bold text-capitalize text-danger">R {{ item.total_price }}</h6>
+
+            </div>
+
+
+        </div>
+
+        <hr class="style1">
+    {% endwith %}
+  {% endfor %}
+
+  <div class="row">
+
+    <div class="col-md-12 col-lg-12 text-center">
+
+      <div class="card myCard">
+        <div class="card-body">
+
+          <p class="card-text text-muted">Your shopping cart reflects the latest prices and stock available.</p>
+
+          <div class="row justify-content-around">
+            <div class="col-sm-6 col-md-3 col-lg-3 text-center">
+              <p class="font-weight-bold textCheckout">45 days</p>
+              <p class="textCheckout">Money Back Guarantee</p>
+            </div>
+
+            <div class="col-sm-6 col-md-3 col-lg-3 text-center">
+
+              <table class="table table-borderless">
+                <tbody>
+                  <tr>
+                    {% with totail_items=cart|length %}
+                      {% if cart|length > 0 %}
+                        <td><p class="font-weight-bold textCheckout">Total </p></td>
+                        <td><p class="font-weight-bold text-capitalize text-danger">R {{ cart.get_total_price }}</p></td>
+                      {% else %}
+                      Your cart is empty.
+                  {% endif %}
+              {% endwith %}
+                  </tr>
+                </tbody>
+              </table>
+              <!-- table end here -->
+
+            </div>
+
+            </div>
+          </div>
+
+          <div class="row justify-content-around">
+
+            <div class="col-sm-6 col-md-3 col-lg-3 text-left">
+              <a href="{% url "shop:product_list" %}" class="btn btn-secondary btn-block btn-Checkout">Continue Shopping</a>
+            </div>
+
+            <div class="col-sm-6 col-md-3 col-lg-3 text-right">
+              <a href="{% url "orders:order_create" %}" class="btn btn-primary btn-block btn-Checkout">Checkout</a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <br>
+      <br>
+
+    </div>
+
+  </div>
+
 </div>
 
+
+<script src="{% static 'shop/js/shop_JS.js' %}"></script>
 
 {% endblock %}
