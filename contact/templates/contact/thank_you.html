@@ -1,7 +1,9 @@
 {% extends 'shop/base.html' %}
+{% load crispy_forms_tags %}
+{% crispy form form.helper %}
 {% load static %}
 {% block title %}
-    Your Shopping Cart| Thank you
+    Your Shopping Cart| Checkout
 {% endblock %}
 
 {% block content %}
@@ -12,24 +14,21 @@
 
     <div class="col-sm-12 col-md-12 col-lg-12 text-center my-col-mainImage">
       <img src="{% static "img/checkMark.png" %}" alt="My image" width="80">
-      <h2>Thank you {{ order.first_name }} for your order!</h2>
-    </div>
-
-    <div class="col-sm-12 col-md-12 col-lg-12 text-center">
-      <p>Your order has been successfully completed. Your order number is <strong>{{ order.id }}</strong>.</p>
-      <p>An email about the details of your order will be sent soon. You can also sign in to your account and check your recent orders.</p>
+      <h2>Thank you for you contacting us, we'll get back to you soon</h2>
     </div>
 
   </div>
 
   <div class="row justify-content-around">
 
+    {% if request.user.is_authenticated %}
     <div class="col-sm-12 col-md-3 col-lg-3 text-center" style="padding: 5px">
       <a href="{% url 'accounts:profile_view' %}" class="btn btn-outline-secondary btn-block" role="button">
         <!-- <i class="fa fa-lg fa-trash"></i> -->
         My Account
       </a>
     </div>
+    {% endif %}
 
     <div class="col-sm-12 col-md-3 col-lg-3 text-center" style="padding: 5px">
       <a href="{% url 'shop:product_list' %}" class="btn btn-outline-success btn-block" role="button">

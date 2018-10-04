@@ -15,6 +15,7 @@
     <div class="col-sm-12 col-md-4 col-lg-4 text-center">
 
       <div class="row justify-content-around productImage">
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
           {% for productsImage in productsImages %}
             {% if productsImage.product.id  == product.id %}
             <img id="{{ productsImage.id }}"
@@ -24,6 +25,7 @@
             alt="">
             {% endif %}
           {% endfor %}
+        </div>
       </div>
       <div class="row justify-content-center">
         {% for productsImage in productsImages %}
@@ -81,6 +83,10 @@
     </div>
 
   </div>
+
+  <!-- <div class="row">
+    {% include 'orders/order/adds.html' %}
+  </div> -->
 
 </div>
 

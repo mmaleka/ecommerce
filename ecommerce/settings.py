@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
     'accounts.apps.AccountsConfig',
+    'contact.apps.ContactConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -129,7 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'products/')
@@ -138,9 +139,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'products/')
 CART_SESSION_ID = 'cart'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-
-
-
-
-

@@ -9,6 +9,7 @@ from .forms import UserLoginForm
 # from posts.models import Post
 from orders.models import Order, OrderItem
 from accounts.forms import RegistrationForm
+from shop.models import Product, ProductImage
 from django.shortcuts import render, get_object_or_404, redirect
 # Create your views here.
 
@@ -68,14 +69,16 @@ def profile_view(request):
 
     orders = Order.objects.filter(first_name=request.user.first_name)
     orderItems = OrderItem.objects.all()
-
-    print("orderItems: ", orderItems)
+    productImage = ProductImage.objects.all()
+    product = Product.objects.all()
 
     context = {
         'title': 'User Profile',
         'user': request.user,
         'orders': orders,
         'orderItems':orderItems,
+        'productImages': productImage,
+        'products': product,
     }
 
     return render(request, "accounts/profile.html", context)

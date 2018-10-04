@@ -2,7 +2,6 @@
 try{
   productImage = document.getElementsByClassName("productImage");
   image = productImage[0].getElementsByTagName("img")
-  console.log(image.length);
   for (i = 0; i < productImage.length; i++) {
     image = productImage[i].getElementsByTagName("img");
 

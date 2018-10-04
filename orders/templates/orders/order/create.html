@@ -21,18 +21,54 @@
         {% if request.user.is_authenticated %}
 
         <form action="." method="post" class="myFormCheckOut">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="inputAddress">Address</label>
+            <input type="text" class="form-control" id="inputAddress" placeholder="Address" name="address" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-8">
+              <label for="inputCity">City</label>
+              <input type="text" class="form-control" id="inputCity" name="city" required>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="inputZip">Postal Code</label>
+              <input type="text" class="form-control" id="inputZip" name="postal_code" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputAddress">Payment Method</label>
+            {{ form.payment_method }}
+            <p>For EFT payment deposit money into this number: <strong>082 904 6234</strong></p>
+          </div>
+          <div class="row justify-content-around">
+            <div class="col-sm-12 col-md-3 col-lg-3 text-center">
+              <input class="btn btn-primary btn-block" type="submit" value="Submit order" />
+            </div>
+          </div>
+        </form>
+
+        <br>
+        <br>
+
+
+
+        <!-- <form action="." method="post" class="myFormCheckOut">
             {% csrf_token %}
             <p>
                 {{ form|crispy }}
             </p>
 
+            <div class="row justify-content-center">
+              <p>For EFT payment method deposit money into this number: <strong>082 904 6234</strong></p>
+            </div>
             <div class="row justify-content-left">
               <div class="col-sm-12 col-md-3 col-lg-3 text-center">
                 <input type="submit" class="btn btn-primary btn-block" value="Submit order">
               </div>
             </div>
 
-        </form>
+        </form> -->
 
         {% else %}
 
@@ -62,6 +98,10 @@
     </div>
 
   </div>
+
+  <!-- <div class="row">
+    {% include 'orders/order/adds.html' %}
+  </div> -->
 
 </div>
 
