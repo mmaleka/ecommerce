@@ -53,7 +53,7 @@
 }
 
 .carousel_image {
-  padding: 20px 0px 20px 0px;
+  padding: 0px 0px 0px 0px;
 }
 
 .body {
@@ -74,7 +74,7 @@
 
 .my-col-small {
   border: 1px solid lightgrey;
-  margin: 5px;
+  margin: 2px;
 }
 
 .my-col-mainImage {
@@ -119,4 +119,8 @@
     left: 50%;
     margin-left: -3px;
     top: 0;
+}
+
+.my_slider {
+  background-color: teal;
 }

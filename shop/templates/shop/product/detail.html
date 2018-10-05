@@ -3,7 +3,11 @@
 {% load static %}
 
 {% block title %}
-    {% if category %}{{ category.name }} {% else %} Products {% endif %}
+    {% if category %}
+    Stuff-Students-Like | {{ category.name }}
+    {% else %}
+    Stuff-Students-Like | Products
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -12,15 +16,15 @@
 
   <div class="row justify-content-around">
 
-    <div class="col-sm-12 col-md-4 col-lg-4 text-center">
+    <div class="col-sm-12 col-md-4 col-lg-5 text-center">
 
       <div class="row justify-content-around productImage">
-        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+        <div class="col-sm-12 col-md-12 col-lg-9 text-center">
           {% for productsImage in productsImages %}
             {% if productsImage.product.id  == product.id %}
-            <img id="{{ productsImage.id }}"
+            <img id="mainImage"
             width="350" height="300"
-            class="card-img-top"
+            name="ImageDetail"
             src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
             alt="">
             {% endif %}
@@ -30,10 +34,12 @@
       <div class="row justify-content-center">
         {% for productsImage in productsImages %}
           {% if productsImage.product.id  == product.id %}
-          <div class="col my-col-small">
+          <div class="col  text-center my-col-small">
             <img id="{{ productsImage.id }}"
+            onclick="changeImage({{ productsImage.id }})"
+            onmouseover="changeImage({{ productsImage.id }})"
             width="80" height="70"
-            class="card-img-top"
+            name="ImageDetailList"
             src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
             alt="">
           </div>
@@ -52,15 +58,15 @@
       <hr class="style1">
 
       <h2 class="font-weight-bold text-capitalize text-danger">R {{ product.price }}</h2>
-      <h5 class="my-text">{{ product.stock}} item{{ product.stock|pluralize }} left</h5>
-      <h5 class="my-text">Shipping:  {{ product.shipping }}</h5>
-      <h5 class="my-text">Warranty:  {{ product.warranty }}</h5>
-      <h5 class="my-text">Barcode:  {{ product.barcode }}</h5>
-      <h5 class="my-text">Hassle-Free Exchanges & Returns for 30 Days</h5>
+      <h6 class="my-text">{{ product.stock}} item{{ product.stock|pluralize }} left</h6>
+      <h6 class="my-text">Shipping:  {{ product.shipping }}</h6>
+      <h6 class="my-text">Warranty:  {{ product.warranty }}</h6>
+      <h6 class="my-text">Barcode:  {{ product.barcode }}</h6>
+      <h6 class="my-text">Hassle-Free Exchanges & Returns for 30 Days</h6>
 
     </div>
 
-    <div class="col-sm-12 col-md-4 col-lg-4 text-center">
+    <div class="col-sm-12 col-md-12 col-lg-3 text-center">
 
       <div class="card">
 
@@ -74,7 +80,7 @@
               <button class="btn btn-primary btn-block"><i class="fa fa-lg fa-shopping-cart"></i> Add to cart</button>
           </form>
 
-          <p>{{ product.description|safe|linebreaksbr }}</p>
+          <p class="my-text">{{ product.description|safe|linebreaksbr }}</p>
 
         </div>
 
