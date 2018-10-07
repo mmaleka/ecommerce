@@ -35,7 +35,6 @@ STATICFILES_DIRS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'django_social_share',
     'shop.apps.ShopConfig',
     'addBanner.apps.AddbannerConfig',
     'cart.apps.CartConfig',
@@ -75,7 +74,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'cart.context_processors.cart',
-                'django.template.context_processors.request',
             ],
         },
     },

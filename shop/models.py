@@ -9,6 +9,7 @@ import sys
 
 class Category(models.Model):
     name = models.CharField(max_length=150, db_index=True)
+    slogan = models.CharField(max_length=150, default='Hot items, Affordable prices')
     slug = models.SlugField(max_length=150, unique=True ,db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

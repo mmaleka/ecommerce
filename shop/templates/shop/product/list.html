@@ -44,34 +44,45 @@
         </div>
       </div>
 
-      <div class="row justify-content-start">
-        {% for product in products %}
-        <div class="col-sm-12 col-md-5 col-lg-4 mb-4 card-product_list">
-          <a href="{{ product.get_absolute_url }}">
-            <div class="card h-100 productImage">
-              {% for productsImage in productsImages %}
-                {% if productsImage.product.id  == product.id %}
-                  <img id="{{ productsImage.id }}"
-                  width="300" height="210"
-                  class="card-img-top"
-                  src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
-                  alt="">
-                {% endif %}
-              {% endfor %}
-              <div class="card-body text-center">
-                <h4 class="card-title">
-                  <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-                </h4>
-                <h5>R{{ product.price }}</h5>
-              </div>
-            </div>
-          </a>
-        </div>
-        {% endfor %}
-        <br>
-        <br>
+      <br>
 
+      {% for c in categories %}
+      <div class="row justify-content-start">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <h3>
+            <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+          </h3>
+          <h4>{{ c.slogan }}</h4>
+        </div>
       </div>
+      <div class="row justify-content-start productSection">
+        {% for product in products %}
+          {% if c.id == product.category.id %}
+          <div class="col-sm-12 col-md-5 col-lg-4 mb-4 card-product_list">
+            <a href="{{ product.get_absolute_url }}">
+              <div class="card h-100 productImage">
+                {% for productsImage in productsImages %}
+                  {% if productsImage.product.id  == product.id %}
+                    <img id="{{ productsImage.id }}"
+                    width="300" height="210"
+                    class="card-img-top"
+                    src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
+                    alt="">
+                  {% endif %}
+                {% endfor %}
+                <div class="card-body text-center">
+                  <h4 class="card-title">
+                    <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+                  </h4>
+                  <h5>R{{ product.price }}</h5>
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% endfor %}
 
     </div>
 

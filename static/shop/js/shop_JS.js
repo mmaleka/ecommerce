@@ -61,7 +61,7 @@ function changeImage(image_id) {
 
 window.onload = changeImg;
 
-
+console.log("egfsdfg");
 
 
 
