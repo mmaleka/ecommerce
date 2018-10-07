@@ -1,7 +1,6 @@
 {% extends 'shop/base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
-{% load social_share %}
 
 {% block title %}
     {% if category %}
@@ -54,7 +53,7 @@
 
       <h3 class="font-weight-bold text-capitalize">{{ product.name }}</h3>
       <br>
-      <a class="facebookShare" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_url }}" target="_blank">
+      <a class="facebookShare" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank">
         <li class="fa fa-facebook-square fa-3x"></li>
       </a>
       <hr class="style1">
