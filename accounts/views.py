@@ -10,6 +10,10 @@ from .forms import UserLoginForm, UserRegisterForm
 from orders.models import Order, OrderItem
 # from accounts.forms import RegistrationForm
 from shop.models import Product, ProductImage
+from analytics.models import RegisterCount
+import re
+import json
+from urllib.request import urlopen
 from django.shortcuts import render, get_object_or_404, redirect
 # Create your views here.
 
@@ -43,6 +47,28 @@ def login_view(request):
 
 def register_view(request):
     form = UserRegisterForm(request.POST or None)
+
+    # Get user ip adress:
+    url = 'http://ipinfo.io/json'
+    response = urlopen(url)
+    data = json.load(response)
+
+    IP=data['ip']
+    org=data['org']
+    city = data['city']
+    country=data['country']
+    region=data['region']
+
+    address = str(str(city)+'-'+str(country)+'-'+str(region))
+
+    view, created = RegisterCount.objects.get_or_create(
+        ip_address = str(IP),
+        address = address
+    )
+    if view:
+        view.views_count += 1
+        view.save()
+
     if form.is_valid():
         user = form.save(commit=False)
         password = form.cleaned_data.get('password')
