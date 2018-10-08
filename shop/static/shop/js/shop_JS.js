@@ -1,4 +1,3 @@
-console.log("egfsdfg");
 
 try{
   productImage = document.getElementsByClassName("productImage");
@@ -61,6 +60,8 @@ function changeImage(image_id) {
   }
 
 window.onload = changeImg;
+
+console.log("egfsdfg");
 
 
 
