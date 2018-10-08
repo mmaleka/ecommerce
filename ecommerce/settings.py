@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'accounts.apps.AccountsConfig',
     'contact.apps.ContactConfig',
+    'analytics.apps.AnalyticsConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',

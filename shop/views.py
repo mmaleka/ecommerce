@@ -4,6 +4,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Category, Product, ProductImage
 from addBanner.models import AddBanner
 from cart.forms import CartAddProductForm
+from analytics.models import ViewsCount
+import re
+import json
+from urllib.request import urlopen
 
 
 def product_list(request, category_slug=None):
@@ -56,6 +60,32 @@ def product_list_by_category(request, category_slug=None):
 
 def product_detail(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
+
+    # Get user ip adress:
+    url = 'http://ipinfo.io/json'
+    response = urlopen(url)
+    data = json.load(response)
+
+    IP=data['ip']
+    org=data['org']
+    city = data['city']
+    country=data['country']
+    region=data['region']
+
+    address = str(str(city)+'-'+str(country)+'-'+str(region))
+
+    view, created = ViewsCount.objects.get_or_create(
+        user = str(request.user),
+        product = str(product),
+        ip_address = str(IP),
+        address = address
+    )
+    if view:
+        view.views_count += 1
+        view.save()
+
+
+
     productsImage = ProductImage.objects.all()
     cart_product_form = CartAddProductForm()
     context = {
