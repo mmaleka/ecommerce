@@ -64,7 +64,7 @@
                 {% for productsImage in productsImages %}
                   {% if productsImage.product.id  == product.id %}
                     <img id="{{ productsImage.id }}"
-                    width="300" height="210"
+                    width="350" height="320"
                     class="card-img-top"
                     src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
                     alt="">

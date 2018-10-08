@@ -23,7 +23,8 @@
           {% for productsImage in productsImages %}
             {% if productsImage.product.id  == product.id %}
             <img id="mainImage"
-            width="350" height="300"
+            width="350" height="350"
+            class="img-responsive"
             name="ImageDetail"
             src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
             alt="">
@@ -38,6 +39,7 @@
             <img id="{{ productsImage.id }}"
             onclick="changeImage({{ productsImage.id }})"
             onmouseover="changeImage({{ productsImage.id }})"
+            class="img-responsive"
             width="80" height="70"
             name="ImageDetailList"
             src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
