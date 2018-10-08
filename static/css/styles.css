@@ -122,7 +122,8 @@
 }
 
 .my_slider {
-  background-color: teal;
+  /* background-color: teal; */
+  padding: 50px
 }
 
 .productSection {
