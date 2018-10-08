@@ -20,11 +20,13 @@
     <div class="col-sm-12 col-md-9 col-lg-9 text-center">
 
       <!-- I will display more categories using pills -->
-      {% for c in categories %}
+
         <nav class="">
+          {% for c in categories %}
           <a class="breadcrumb-item" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+          {% endfor %}
         </nav>
-      {% endfor %}
+
 
     </div>
 
