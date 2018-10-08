@@ -46,7 +46,7 @@
       <div class="row justify-content-start productSection">
         {% for product in products %}
           {% if c.id == product.category.id %}
-          <div class="col-10 col-sm-6 col-md-4 col-lg-4 card-product_list">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4 card-product_list">
             <a href="{{ product.get_absolute_url }}">
               <div class="card h-100 productImage">
                 {% for productsImage in productsImages %}
