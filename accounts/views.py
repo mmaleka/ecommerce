@@ -5,10 +5,10 @@ from django.contrib.auth import (
     logout,
 )
 
-from .forms import UserLoginForm
+from .forms import UserLoginForm, UserRegisterForm
 # from posts.models import Post
 from orders.models import Order, OrderItem
-from accounts.forms import RegistrationForm
+# from accounts.forms import RegistrationForm
 from shop.models import Product, ProductImage
 from django.shortcuts import render, get_object_or_404, redirect
 # Create your views here.
@@ -42,21 +42,38 @@ def login_view(request):
 
 
 def register_view(request):
-    next = request.GET.get('next')
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            if next:
-                return redirect(next)
-            return redirect('shop:product_list')
-    else:
-        form = RegistrationForm()
-        context = {
-            'title': 'Sign Up',
-            'form': form,
-        }
-        return render(request, "accounts/form.html", context)
+    form = UserRegisterForm(request.POST or None)
+    if form.is_valid():
+        user = form.save(commit=False)
+        password = form.cleaned_data.get('password')
+        user.set_password(password)
+        user.save()
+        new_user = authenticate(username=user.username, password=password)
+        login(request, new_user)
+        return redirect('shop:product_list')
+
+    context = {
+                'title': 'Sign Up',
+                'form': form,
+            }
+    return render(request, "accounts/form.html", context)
+
+# def register_view(request):
+#     next = request.GET.get('next')
+#     if request.method == 'POST':
+#         form = RegistrationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             if next:
+#                 return redirect(next)
+#             return redirect('shop:product_list')
+#     else:
+#         form = RegistrationForm()
+#         context = {
+#             'title': 'Sign Up',
+#             'form': form,
+#         }
+#         return render(request, "accounts/form.html", context)
 
 
 def logout_view(request):
