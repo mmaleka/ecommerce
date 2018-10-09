@@ -38,20 +38,20 @@
             {% for orderItem in orderItems %}
               {% if order.id == orderItem.order.id %}
                 <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-sm-12 col-md-4 col-lg-4 productImage">
+                  <div class="row justify-content-between">
+                    <div class="col-sm-12 col-md-3 col-lg-3 productImage">
                       <a href="{{ orderItem.product.get_absolute_url }}">
                         {% for productImage in productImages %}
                           {% if productImage.product.id  == orderItem.product.id %}
                           <img id="{{ productsImage.id }}"
-                          width="130" height="100"
+                          class="img-fluid"
                           src="{% if productImage.image %} {{ productImage.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
                           alt="...">
                           {% endif %}
                         {% endfor %}
                       </a>
                     </div>
-                    <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-sm-12 col-md-3 col-lg-3">
                       <a href="{{ orderItem.product.get_absolute_url }}">
                         <p class="font-weight-bold">{{ orderItem.product.name }}</p>
                       </a>

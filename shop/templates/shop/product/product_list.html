@@ -13,7 +13,32 @@
 
 {% block content %}
 
+<div class="row justify-content-around searchWidth">
+  <div class="col-sm-8 col-md-6 col-lg-6 text-center">
+    <form>
+      <form class="form-inline my-2 my-lg-0">
+          <div class="row">
+             <div class="col-md-12">
+              <div class="input-group input-group-lg">
+                <input type="text"
+                       name="search"
+                       class="form-control input-lg"
+                       id="search-church"
+                       value="{{ request.GET.search }}"
+                       placeholder="Search {{ category }}">
+                <span class="input-group-btn">
+                  <button class="btn btn-default btn-lg" type="submit"><i class="fa fa-lg fa-search"></i></button>
+                </span>
+              </div>
+            </div>
+          </div>
+
+      </form>
+  </div>
+</div>
+
 <div class="container">
+
 
   <div class="row justify-content-around">
 
@@ -35,14 +60,6 @@
       <br>
 
       {% for c in categories %}
-      <!-- <div class="row justify-content-start">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-          <h3>
-            <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
-          </h3>
-          <h4>{{ c.slogan }}</h4>
-        </div>
-      </div> -->
       <div class="row justify-content-start productSection">
         {% for product in products %}
           {% if c.id == product.category.id %}

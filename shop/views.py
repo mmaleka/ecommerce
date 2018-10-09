@@ -1,6 +1,7 @@
 # Create your views here.
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 from .models import Category, Product, ProductImage
 from addBanner.models import AddBanner
 from cart.forms import CartAddProductForm
@@ -15,20 +16,19 @@ def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()
     adds = AddBanner.objects.all()
-    products = Product.objects.filter(available=True)
+    products = Product.objects.filter(available=True).order_by("-updated_at")
     productsImage = ProductImage.objects.all()
-    if 'search' in request.GET:
-        search_term = request.GET['search']
-        products = products.filter(name__icontains=search_term)
+
+    query = request.GET.get("search")
+    if query:
+        products = products.filter(
+        Q(name__icontains=query) |
+        Q(description__icontains=query)
+        ).distinct
 
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         products = Product.objects.filter(category=category)
-
-
-
-    # paginator = Paginator(queryset_list, 10)  # Show 10 contacts per page
-    page = request.GET.get('page')
 
     context = {
         'category': category,
@@ -45,9 +45,18 @@ def product_list(request, category_slug=None):
 def product_list_by_category(request, category_slug=None):
     categories = Category.objects.all()
     productsImage = ProductImage.objects.all()
+    products = Product.objects.filter(available=True).order_by("-updated_at")
+
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         products = Product.objects.filter(category=category)
+
+    query = request.GET.get("search")
+    if query:
+        products = products.filter(
+        Q(name__icontains=query) |
+        Q(description__icontains=query)
+        ).distinct
 
     context = {
         'category': category,
