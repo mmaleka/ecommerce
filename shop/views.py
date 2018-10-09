@@ -1,6 +1,8 @@
 # Create your views here.
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.shortcuts import render
 from django.db.models import Q
 from .models import Category, Product, ProductImage
 from addBanner.models import AddBanner
@@ -16,8 +18,13 @@ def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()
     adds = AddBanner.objects.all()
-    products = Product.objects.filter(available=True).order_by("-updated_at")
+    products_list = Product.objects.filter(available=True).order_by("-updated_at")
     productsImage = ProductImage.objects.all()
+
+    paginator = Paginator(products_list, 10) # Show 25 contacts per page
+
+    page = request.GET.get('page')
+    products = paginator.get_page(page)
 
     query = request.GET.get("search")
     if query:
@@ -45,11 +52,17 @@ def product_list(request, category_slug=None):
 def product_list_by_category(request, category_slug=None):
     categories = Category.objects.all()
     productsImage = ProductImage.objects.all()
-    products = Product.objects.filter(available=True).order_by("-updated_at")
+    products_list = Product.objects.filter(available=True).order_by("-updated_at")
+
 
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
-        products = Product.objects.filter(category=category)
+        products_list = Product.objects.filter(category=category)
+
+        paginator = Paginator(products_list, 25) # Show 25 contacts per page
+
+        page = request.GET.get('page')
+        products = paginator.get_page(page)
 
     query = request.GET.get("search")
     if query:

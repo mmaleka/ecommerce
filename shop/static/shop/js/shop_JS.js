@@ -63,6 +63,19 @@ window.onload = changeImg;
 
 console.log("egfsdfg");
 
+function removeElement(elemenetName) {
+  g = document.body
+  x = g.clientWidth,
+  console.log(x);
+  if (x < 576) {
+    elemenetName[0].style.display='none';
+  }
+
+}
+
+elemenetName = document.getElementsByClassName("my-Catergory")
+
+removeElement(elemenetName);
 
 
 
