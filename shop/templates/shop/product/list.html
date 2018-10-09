@@ -17,8 +17,8 @@
 
   <div class="row justify-content-around">
 
-    <div class="col-sm-12 col-md-3 col-lg-3">
-      <h5 class="my-4">Shop By Catergory</h5>
+    <div class="col-sm-12 col-md-5 col-lg-5">
+      <h6 class="my-4">Shop By Catergory</h5>
       <div class="list-group">
         <a class="list-group-item" {% if not category %} class="active"{% endif %} href="{% url 'shop:product_list' %}">All</a>
         {% for c in categories %}
@@ -27,20 +27,17 @@
       </div>
     </div>
 
-    <div class="col-sm-12 col-md-9 col-lg-9 text-center">
+    <div class="col-sm-12 col-md-7 col-lg-7">
 
-      <div class="row justify-content-around my_slider">
-        <div class="col-sm-12 col-md-6 col-lg-6">
-
+      <div class="row justify-content-right my_slider">
+        <div class="col-sm-12 col-md-12 col-lg-12">
           {% for add in adds %}
             <img name="ImageSliderList" src="{{ add.image.url }}" alt="">
           {% endfor %}
-          <div class="carousel_image center">
-            <a name="slide_href" href="http://127.0.0.1:8000/book/">
-              <img name="slide" width="500" height="60" class="d-block img-fluid" alt="Second slide">
-            </a>
-          </div>
-
+            <img id="{{ productsImage.id }}"
+            name="slide"
+            class="img-fluid"
+            >
         </div>
       </div>
 
@@ -62,7 +59,7 @@
       <div class="row justify-content-start productSection">
         {% for product in products %}
           {% if c.id == product.category.id %}
-          <div class="col-12 col-sm-6 col-md-5 col-lg-4 card-product_list">
+          <div class="col-12 col-sm-4 col-md-4 col-lg-4 card-product_list">
             <a href="{{ product.get_absolute_url }}">
               <div class="card h-100 productImage">
                 {% for productsImage in productsImages %}
