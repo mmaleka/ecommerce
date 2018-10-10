@@ -127,6 +127,14 @@
 
       <br>
 
+      <!-- I will display more categories using pills and add a class of hide for big devices-->
+
+        <nav class="">
+          {% for c in categories %}
+          <a class="breadcrumb-item" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+          {% endfor %}
+        </nav>
+
 </div>
 
 

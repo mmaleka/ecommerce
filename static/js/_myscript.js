@@ -11,6 +11,8 @@ function removeElement(elemenetName) {
 function changeClassCheckout() {
    var elementCheckout = document.getElementById("id_payment_method");
    elementCheckout.classList.add("form-control");
+   var elementShippingMethod = document.getElementById("id_shipping");
+   elementShippingMethod.classList.add("form-control");
 }
 
 function changeClassCart() {

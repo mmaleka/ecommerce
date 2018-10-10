@@ -16,7 +16,7 @@
 }
 
 .navbar {
-  background-color: #446c87;
+  background-color: #0b3e6e;
   color: #EEE5E9;
 }
 
@@ -145,4 +145,8 @@
 
 .container {
   /* background-color: pink; */
+}
+
+body {
+  min-height: 100vh;
 }

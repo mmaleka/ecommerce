@@ -11,6 +11,13 @@ class Order(models.Model):
     city = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    shipping_Choices = (
+    ('FD', 'Free delivery (Free) - 20 to 37 days'),
+    ('PL', 'Priority delivery (R 99.00) - 4 to 15 days'),
+    )
+    shipping = models.CharField(max_length=2, choices=shipping_Choices, default='Free delivery - 20 to 37 days')
+
     payment_Choices = (
     ('EP', 'EFT Payment'),
     ('DP', 'Payment on delivery'),
@@ -39,8 +46,8 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='order_items', on_delete=models.CASCADE)
-    productImage = models.ForeignKey(ProductImage, related_name='order_items_images',
-    on_delete=models.CASCADE, null=True)
+    # productImage = models.ForeignKey(ProductImage, related_name='order_items_images',
+    # on_delete=models.CASCADE, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
 

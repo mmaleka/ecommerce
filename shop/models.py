@@ -38,6 +38,16 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     warranty = models.CharField(max_length=100, default='Limited (12 months)')
+
+    # shipping_Choices = (
+    # ('FD', 'Free delivery available in South Africa only'),
+    # ('PR', 'Payment received'),
+    # ('PO', 'Processing order'),
+    # ('ID', 'Items dispatched'),
+    # ('IR', 'Items received'),
+    # )
+    #
+    # shipping = models.CharField(max_length=2, choices=shipping_Choices, default='Free delivery available in South Africa only')
     shipping = models.TextField(default='Free delivery available in South Africa only')
     barcode = models.CharField(max_length=100, default='No barcode yet')
 
