@@ -61,8 +61,6 @@ function changeImage(image_id) {
 
 window.onload = changeImg;
 
-console.log("egfsdfg");
-
 function removeElement(elemenetName) {
   g = document.body
   x = g.clientWidth,
@@ -73,9 +71,10 @@ function removeElement(elemenetName) {
 
 }
 
-elemenetName = document.getElementsByClassName("my-Catergory")
+elemenetName = document.getElementsByClassName("my-Catergory");
 
 removeElement(elemenetName);
+// removeElement(elemenetNameFooter);
 
 
 

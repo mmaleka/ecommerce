@@ -5,6 +5,9 @@ from django.contrib.auth import (
     logout,
 )
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+
 from .forms import UserLoginForm, UserRegisterForm
 # from posts.models import Post
 from orders.models import Order, OrderItem
@@ -15,6 +18,7 @@ import re
 import json
 from urllib.request import urlopen
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -107,13 +111,18 @@ def logout_view(request):
     return redirect('shop:product_list')
 
 
-
+@login_required
 def profile_view(request):
 
-    orders = Order.objects.filter(first_name=request.user.first_name)
+    orders_list = Order.objects.filter(first_name=request.user.first_name)
     orderItems = OrderItem.objects.all()
     productImage = ProductImage.objects.all()
     product = Product.objects.all()
+
+    paginator = Paginator(orders_list, 5) # Show 25 contacts per page
+
+    page = request.GET.get('page')
+    orders = paginator.get_page(page)
 
     context = {
         'title': 'User Profile',
