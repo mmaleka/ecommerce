@@ -14,7 +14,7 @@
 
 <div class="container my-container">
 
-  <div class="row justify-content-around">
+  <div class="row justify-content-around mb-3">
 
     <div class="col-sm-12 col-md-4 col-lg-5 text-center">
 
@@ -82,7 +82,11 @@
               <button class="btn btn-primary btn-block"><i class="fa fa-lg fa-shopping-cart"></i> Add to cart</button>
           </form>
 
-          <p class="my-text">{{ product.description|safe|linebreaksbr }}</p>
+          <div class="text-left text-muted">
+
+            <p class="my-text">{{ product.description|safe|linebreaksbr }}</p>
+
+          </div>
 
         </div>
 
@@ -92,8 +96,151 @@
 
   </div>
 
+  <div class="row justify-content-around">
+
+    <div class="col-sm-12 col-md-12 col-lg-12 text-left mb-3">
+
+      <hr class="style1 mb-5">
+
+      <!-- Will use javascript to hide and display between discription and product reviews -->
+
+      <h4>
+        <strong>Product Reviews
+        </strong>
+      </h>
+
+    </div>
+
+  </div>
+
+
+
+
+  <div class="row justify-content-around">
+    <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
+      <!-- <h5>Rate this item</h5> -->
+      {% if request.user.is_authenticated %}
+
+        <form method="POST" action="" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            {{ comment_form|crispy }}
+          </div>
+          <div class="row justify-content-start">
+            <div class="col-sm-12 col-md-2 col-lg-2 text-center">
+              <input class="btn btn-primary btn-block" type="submit" value="Submit" />
+            </div>
+          </div>
+        </form>
+
+      {% else %}
+
+      <div class="well well-lg">
+          <h3>You must Sign In to add a review</h3>
+      </div>
+
+      {% endif %}
+    </div>
+  </div>
+
+
+  {% for comment in comments %}
+
+
+  <div class="card comments_row">
+    <div class="card-body">
+      <div class="row justify-content-around">
+
+        <div class="col-sm-12 col-md-4 col-lg-4 text-left">
+          <h6>{{ user.first_name }} {{ user.last_name }}</h6>
+          <p text-muted>
+            - on {{ comment.timestamp }}
+          </p>
+        </div>
+
+        <div class="col-sm-12 col-md-8 col-lg-8 text-left">
+          <div class="justify-content-around">
+            <div class="col-sm-12 col-md-12 col-lg-12 text-left">
+              <p>{{ comment.content }}</p>
+            </div>
+          </div>
+
+          <div class="justify-content-">
+            <div class="col-sm-12 col-md-12 col-lg-12 text-left">
+              {% if comment.image %}
+                  <img src="{{ comment.image.url }}" class="img-responsive" width="120" height="100">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+
+  <div class="pagination">
+      <span class="step-links">
+          {% if comments.has_previous %}
+              <a href="?page=1">&laquo; first</a>
+              <a href="?page={{ comments.previous_page_number }}">previous</a>
+          {% endif %}
+
+          <span class="current">
+              Page {{ comments.number }} of {{ comments.paginator.num_pages }}.
+          </span>
+
+          {% if comments.has_next %}
+              <a href="?page={{ comments.next_page_number }}">next</a>
+              <a href="?page={{ comments.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+      </span>
+  </div>
+
+
+
+
+
+      <!-- Comments Form -->
+      <!-- <div class="thumbnail">
+          <h5 class="card-header">Leave a Comment:</h5>
+          {% if request.user.is_authenticated %}
+
+          <div class="card-body">
+            <form method="POST" action="." enctype="multipart/form-data">{% csrf_token %}
+              {{ comment_form }}
+              <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+
+          {% else %}
+
+          <div class="well well-lg">
+              <h3>You must login to reply</h3>
+          </div>
+
+          {% endif %}
+      </div> -->
+
+
+      <!-- {% for comment in comments %}
+      {% if comment.content %}
+          <p>{{ comment.content }}</p>
+        </div>
+        {% if comment.image %}
+            <img src="{{ comment.image.url }}" class="img-responsive" width="400" height="400">
+        {% endif %}
+      {% else %}
+        <div class="">
+          <p>No Coomments </p>
+        </div>
+      {% endif %}
+      {% endfor %} -->
+
+
   <!-- <div class="row">
-    {% include 'orders/order/adds.html' %}
+    {% include 'recommend/recommend.html' %}
   </div> -->
 
 </div>

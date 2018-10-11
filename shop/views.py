@@ -1,5 +1,6 @@
 # Create your views here.
 from django.shortcuts import render, get_object_or_404
+from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
@@ -8,6 +9,8 @@ from .models import Category, Product, ProductImage
 from addBanner.models import AddBanner
 from cart.forms import CartAddProductForm
 from analytics.models import ViewsCount
+from comments.models import Comment
+from comments.forms import CommentForm
 import re
 import json
 from urllib.request import urlopen
@@ -106,13 +109,47 @@ def product_detail(request, id, slug):
         view.views_count += 1
         view.save()
 
+    initial_data = {
+        "content_type": product.get_content_type,
+        "object_id": product.id,
+    }
 
+
+    form = CommentForm(request.POST or None, request.FILES or None, initial=initial_data)
+    if form.is_valid() and request.user.is_authenticated:
+        c_type = form.cleaned_data.get("content_type")
+        content_type = ContentType.objects.get(model=c_type)
+        obj_id = form.cleaned_data.get("object_id")
+        content_data = form.cleaned_data.get("content")
+        model_pic = form.cleaned_data.get("image")
+        new_comment, created = Comment.objects.get_or_create(
+            user = request.user,
+            content_type=content_type,
+            object_id = obj_id,
+            content=content_data,
+            image=model_pic,
+        )
+
+        if created:
+            print("yeah")
+
+
+    content_type = ContentType.objects.get_for_model(Product)
+    obj_id = product.id
+    comments_list = Comment.objects.filter_by_product(product).order_by("-timestamp")
+
+    paginator = Paginator(comments_list, 5) # Show 25 contacts per page
+
+    page = request.GET.get('page')
+    comments = paginator.get_page(page)
 
     productsImage = ProductImage.objects.all()
     cart_product_form = CartAddProductForm()
     context = {
         'product': product,
         'cart_product_form': cart_product_form,
-        'productsImages': productsImage
+        'productsImages': productsImage,
+        'comments': comments,
+        'comment_form': form,
     }
     return render(request, 'shop/product/detail.html', context)

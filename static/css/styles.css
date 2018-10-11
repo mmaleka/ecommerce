@@ -150,3 +150,10 @@
 body {
   min-height: 100vh;
 }
+
+.comments_row {
+  /* background-color: pink; */
+  padding: 5px;
+  margin-top: 10px;
+  border: 1px solid lightgrey;
+}

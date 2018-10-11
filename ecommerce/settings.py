@@ -35,6 +35,7 @@ STATICFILES_DIRS = [
 # Application definition
 
 INSTALLED_APPS = [
+    # Installed apps
     'shop.apps.ShopConfig',
     'addBanner.apps.AddbannerConfig',
     'cart.apps.CartConfig',
@@ -43,6 +44,10 @@ INSTALLED_APPS = [
     'contact.apps.ContactConfig',
     'analytics.apps.AnalyticsConfig',
     'crispy_forms',
+    'comments.apps.CommentsConfig',
+    'recommend.apps.RecommendConfig',
+
+    # Defaults
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

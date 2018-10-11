@@ -3,6 +3,7 @@ from django.urls import reverse
 from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.contrib.contenttypes.models import ContentType
 import sys
 
 
@@ -64,6 +65,12 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('shop:product_detail', args=[self.id, self.slug])
+
+    @property
+    def get_content_type(self):
+        product = self
+        content_type=ContentType.objects.get_for_model(product.__class__)
+        return content_type
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')

@@ -22,6 +22,11 @@ function changeClassCart() {
    elementCart.classList.add("dropdown-toggle");
 }
 
+function changeProductReviewTextArea() {
+   var elementTextArea = document.getElementById("id_content").rows = "3";
+   console.log("elementTextArea", elementTextArea);
+   elementTextArea.classList.add("form-control");
+}
 
 
 
@@ -38,4 +43,11 @@ try {
   changeClassCheckout()
 } catch (e) {
   console.log("Error changing class checkout");
+}
+
+try {
+  productReview = document.getElementById('id_content');
+  changeProductReviewTextArea(productReview)
+} catch (e) {
+  console.log("Error changing product review text area", e);
 }
