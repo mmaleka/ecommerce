@@ -51,6 +51,8 @@ class Product(models.Model):
     shipping = models.TextField(default='Free delivery available in South Africa only')
     barcode = models.CharField(max_length=100, default='No barcode yet')
 
+    productUrl = models.CharField(max_length=220, default="https://www.aliexpress.com/")
+
     # image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
 
     class Meta:
