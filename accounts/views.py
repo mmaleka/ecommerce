@@ -3,7 +3,11 @@ from django.contrib.auth import (
     get_user_model,
     login,
     logout,
+    # PasswordReset,
+    # password_reset_done,
 )
+
+
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -88,22 +92,9 @@ def register_view(request):
             }
     return render(request, "accounts/form.html", context)
 
-# def register_view(request):
-#     next = request.GET.get('next')
-#     if request.method == 'POST':
-#         form = RegistrationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             if next:
-#                 return redirect(next)
-#             return redirect('shop:product_list')
-#     else:
-#         form = RegistrationForm()
-#         context = {
-#             'title': 'Sign Up',
-#             'form': form,
-#         }
-#         return render(request, "accounts/form.html", context)
+# 
+# def password_reset_view(request):
+#     password_reset(request)
 
 
 def logout_view(request):
@@ -114,7 +105,8 @@ def logout_view(request):
 @login_required
 def profile_view(request):
 
-    orders_list = Order.objects.filter(first_name=request.user.first_name)
+    # orders_list = Order.objects.filter(first_name=request.user.first_name)
+    orders_list = Order.objects.filter(email=request.user.email)
     orderItems = OrderItem.objects.all()
     productImage = ProductImage.objects.all()
     product = Product.objects.all()

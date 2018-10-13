@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from django.core.mail.backends.smtp import EmailBackend
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'password_reset',
 ]
 
 MIDDLEWARE = [
@@ -71,7 +73,7 @@ ROOT_URLCONF = 'ecommerce.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -145,3 +147,24 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'products/')
 CART_SESSION_ID = 'cart'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mpho.maleka3@gmail.com'
+EMAIL_HOST_PASSWORD = 'MphoMaleka@@199009086829'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
+
+
+# SEND_GRID_API_KEY = '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'
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_HOST_USER = 'mpho.maleka3@gmail.com'
+# EMAIL_HOST_PASSWORD = 'MphoMaleka@@199009086829'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = 'mpho.maleka3@gmail.com'
+# ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Contact email received from website'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

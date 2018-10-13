@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.shortcuts import render
 from .models import Contact
 from .forms import UserContactForm
@@ -7,7 +9,6 @@ def contact_view(request):
 
     if request.method == 'POST':
         form = UserContactForm(request.POST)
-        print("is form valid", form)
         if form.is_valid():
 
             first_name = form.cleaned_data['first_name']
@@ -20,6 +21,20 @@ def contact_view(request):
             contact.last_name = last_name
             contact.email = email
             contact.message = message
+
+            # Email ourselves the submitted contact message
+
+            subject  = 'Contact Form Received'
+            from_email = settings.EMAIL_HOST_USER
+            to_email = ['mpho.maleka3@gmail.com']
+
+            html_content = """<p>This is an <strong>important</strong> message.</p>"""
+
+            contact_message = "{0}, from {1} with email {2}".format(message, first_name, email)
+
+            send_mail(subject, contact_message, from_email, to_email, fail_silently=False)
+
+            # send_mail('Subject here', 'Here is the message.', 'mpho.maleka3@gmail.com', ['mpho.maleka3@gmail.com'], fail_silently=False)
 
             contact.save()
 
