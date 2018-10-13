@@ -32,7 +32,7 @@ def contact_view(request):
 
             contact_message = "{0}, from {1} with email {2}".format(message, first_name, email)
 
-            send_mail(subject, contact_message, from_email, to_email, html_message=some_html_message, fail_silently=False)
+            send_mail(subject, contact_message, from_email, to_email, fail_silently=False)
 
             # send_mail('Subject here', 'Here is the message.', 'mpho.maleka3@gmail.com', ['mpho.maleka3@gmail.com'], fail_silently=False)
 
