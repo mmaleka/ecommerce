@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'comments.apps.CommentsConfig',
     'recommend.apps.RecommendConfig',
+    'blog.apps.BlogConfig',
 
     # Defaults
     'django.contrib.admin',

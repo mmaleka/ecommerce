@@ -30,15 +30,20 @@ def product_list(request, category_slug=None):
     products = paginator.get_page(page)
 
     query = request.GET.get("search")
+
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        products = Product.objects.filter(category=category).order_by("-updated_at")
+
+    print('products: ', products)
+
     if query:
         products = products.filter(
         Q(name__icontains=query) |
         Q(description__icontains=query)
         ).distinct
 
-    if category_slug:
-        category = get_object_or_404(Category, slug=category_slug)
-        products = Product.objects.filter(category=category).order_by("-updated_at")
+
 
     context = {
         'category': category,

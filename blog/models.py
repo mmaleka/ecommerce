@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
 from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -10,11 +11,9 @@ import sys
 
 class Category(models.Model):
     name = models.CharField(max_length=150, db_index=True)
-    slogan = models.CharField(max_length=150, default='Hot items, Affordable prices')
     slug = models.SlugField(max_length=150, unique=True ,db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
 
     class Meta:
         ordering = ('name', )
@@ -25,57 +24,45 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('shop:product_list_by_category', args=[self.slug])
+        return reverse('post:post_list_by_category', args=[self.slug])
 
 
-class Product(models.Model):
+class Post(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
-    name = models.CharField(max_length=100, db_index=True)
+    title = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=100, db_index=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     description = models.TextField(blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    available = models.BooleanField(default=True)
-    stock = models.PositiveIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
+    draft = models.BooleanField(default=True)
     updated_at = models.DateTimeField(auto_now=True)
-    warranty = models.CharField(max_length=100, default='Limited (12 months)')
-
-    shipping = models.TextField(default='Free delivery available in South Africa only')
-    barcode = models.CharField(max_length=100, default='No barcode yet')
-
-    productUrl = models.CharField(max_length=220, default="https://www.aliexpress.com/")
-
-    # image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
+    image = models.ImageField(upload_to='blog/%Y/%m/%d', blank=True, null=True)
 
     class Meta:
-        ordering = ('name', )
+        ordering = ('title', )
         index_together = (('id', 'slug'),)
 
     def __str__(self):
-        return self.name
+        return self.title
 
     def get_absolute_url(self):
-        return reverse('shop:product_detail', args=[self.id, self.slug])
-
-    @property
-    def get_content_type(self):
-        product = self
-        content_type=ContentType.objects.get_for_model(product.__class__)
-        return content_type
-
-class ProductImage(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
+        return reverse('blog:post_detail', args=[self.id, self.slug])
 
     def save(self):
         #Opening the uploaded image
         im = Image.open(self.image)
         output = BytesIO()
         #Resize/modify the image
-        im = im.resize( (500,500) )
+        im = im.resize( (800,400) )
         #after modifications, save it to the output
         im.save(output, format='JPEG', quality=100)
         output.seek(0)
         #change the imagefield value to be the newley modifed image value
         self.image = InMemoryUploadedFile(output,'ImageField', "%s.jpg" %self.image.name.split('.')[0], 'image/jpeg', sys.getsizeof(output), None)
-        super(ProductImage,self).save()
+        super(Post,self).save()
+
+    @property
+    def get_content_type(self):
+        post = self
+        content_type=ContentType.objects.get_for_model(post.__class__)
+        return content_type

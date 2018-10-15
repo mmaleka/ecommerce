@@ -1,0 +1,148 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block title %}
+    {% if category %}
+    Gear-Academy | {{ category.name }}
+    {% else %}
+    Gear-Academy | Blog
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+
+
+<div class="container">
+
+  <div class="row justify-content-start">
+
+    <div class="col-12 col-sm-8 col-md-8 col-lg-8">
+      <div class="blog_card">
+        <a href="{{ post.get_absolute_url }}">
+          <img class="card-img-top img-fluid"
+          src="{% if post.image %} {{ post.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
+          alt="">
+        </a>
+        <div class="card-body">
+          <a href="{{ post.get_absolute_url }}">
+            <h4 class="card-title">{{ post.title }}</h4>
+          </a>
+          <p class="card-text text-muted">By: {{ post.author.first_name }} {{ post.author.last_name }}</p>
+          <p class="card-text text-muted text-justify">{{ post.description }}</p>
+        </div>
+      </div>
+
+      <hr class="detail_hrLine mb-5">
+
+      <h3>Comments</h3>
+
+      <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
+        <!-- <h5>Rate this item</h5> -->
+        {% if request.user.is_authenticated %}
+
+          <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              {{ comment_form|crispy }}
+            </div>
+            <div class="row justify-content-start">
+              <div class="col-sm-12 col-md-2 col-lg-2 text-center">
+                <input class="btn btn-primary btn-block" type="submit" value="Submit" />
+              </div>
+            </div>
+          </form>
+
+        {% else %}
+
+        <div class="well well-lg">
+            <h3>You must Sign In to leave a comment</h3>
+        </div>
+
+        {% endif %}
+      </div>
+
+      {% for comment in comments %}
+
+
+      <div class="card comments_row">
+        <div class="card-body">
+          <div class="row justify-content-around">
+
+            <div class="col-sm-12 col-md-4 col-lg-4 text-left">
+              <h6>{{ user.first_name }} {{ user.last_name }}</h6>
+              <p text-muted>
+                - on {{ comment.timestamp }}
+              </p>
+            </div>
+
+            <div class="col-sm-12 col-md-8 col-lg-8 text-left">
+              <div class="justify-content-around">
+                <div class="col-sm-12 col-md-12 col-lg-12 text-left">
+                  <p>{{ comment.content }}</p>
+                </div>
+              </div>
+
+              <div class="justify-content-">
+                <div class="col-sm-12 col-md-12 col-lg-12 text-left">
+                  {% if comment.image %}
+                      <img src="{{ comment.image.url }}" class="img-responsive" width="120" height="100">
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+
+    </div>
+
+
+
+    <div class="col-12 col-sm-4 col-md-4 col-lg-4">
+      <div class="card blog_card blog_card1">
+        <div class="card-header">
+          Popular Posts
+        </div>
+        <ul class="list-group list-group-flush">
+          {% for post_list in post_list %}
+          <li class="list-group-item">
+            <a href="{{ post_list.get_absolute_url }}" class="my_link">{{ post_list.title }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pagination">
+      <span class="step-links">
+          {% if comments.has_previous %}
+              <a href="?page=1">&laquo; first</a>
+              <a href="?page={{ comments.previous_page_number }}">previous</a>
+          {% endif %}
+
+          <span class="current">
+              Page {{ comments.number }} of {{ comments.paginator.num_pages }}.
+          </span>
+
+          {% if comments.has_next %}
+              <a href="?page={{ comments.next_page_number }}">next</a>
+              <a href="?page={{ comments.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+      </span>
+  </div>
+
+
+</div>
+
+<script src="{% static 'shop/js/shop_JS.js' %}"></script>
+
+{% endblock %}

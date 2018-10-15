@@ -50,13 +50,27 @@
   <div class="row justify-content-around">
 
     <div class="col-sm-12 col-md-5 col-lg-5 my-Catergory">
-      <h6 class="my-4">Shop By Catergory</h5>
+      <div class="card blog_card blog_card1">
+        <div class="card-header">
+          Shop By Catergory
+        </div>
+        <ul class="list-group list-group-flush">
+          <a href="{{ post.get_absolute_url }}" class="list-group-item my_link" {% if not category %} class="active"{% endif %} href="{% url 'shop:product_list' %}">All</a>
+          {% for c in categories %}
+          <li class="list-group-item">
+            <a href="{{ c.get_absolute_url }}" class="my_link">{{ c.name }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- <h6 class="my-4">Shop By Catergory</h5>
       <div class="list-group">
         <a class="list-group-item" {% if not category %} class="active"{% endif %} href="{% url 'shop:product_list' %}">All</a>
         {% for c in categories %}
           <a class="list-group-item" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
         {% endfor %}
-      </div>
+      </div> -->
     </div>
 
     <div class="col-sm-12 col-md-7 col-lg-7">
@@ -93,7 +107,7 @@
           {% if c.id == product.category.id %}
           <div class="col-12 col-sm-4 col-md-4 col-lg-3 card-product_list">
             <a href="{{ product.get_absolute_url }}">
-              <div class="card h-100 productImage">
+              <div class="card h-100 productImage blog_card1">
                 {% for productsImage in productsImages %}
                   {% if productsImage.product.id  == product.id %}
                     <img id="{{ productsImage.id }}"

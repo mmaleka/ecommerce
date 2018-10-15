@@ -1,0 +1,92 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% load staticfiles %}
+
+{% block title %}
+    {% if category %}
+    Gear-Academy | {{ category.name }}
+    {% else %}
+    Gear-Academy | Blog
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+
+  <div class="row justify-content-around searchWidth">
+    <div class="col-sm-8 col-md-6 col-lg-6 text-center">
+      <form>
+        <form class="form-inline my-2 my-lg-0">
+            <div class="row">
+               <div class="col-md-12">
+                <div class="input-group input-group-lg">
+                  <input type="text"
+                         name="search"
+                         class="form-control input-lg"
+                         id="search-church"
+                         value="{{ request.GET.search }}"
+                         placeholder="Search posts">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default btn-lg" type="submit"><i class="fa fa-lg fa-search"></i></button>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+        </form>
+    </div>
+  </div>
+
+</div>
+
+
+
+<div class="container">
+
+  <div class="row justify-content-start">
+
+    <div class="col-12 col-sm-8 col-md-8 col-lg-8">
+      {% for post in posts %}
+      <div class="card blog_card blog_card1">
+        <a href="{{ post.get_absolute_url }}">
+          <img class="card-img-top img-fluid"
+          src="{% if post.image %} {{ post.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
+          alt="">
+        </a>
+        <div class="card-body">
+          <a href="{{ post.get_absolute_url }}">
+            <h4 class="card-title">{{ post.title }}</h4>
+          </a>
+          <p class="card-text text-muted">By: {{ post.author.first_name }} {{ post.author.last_name }}</p>
+          <p class="card-text text-muted blog_card_text">{{ post.description }}</p>
+          <a href="{{ post.get_absolute_url }}" class="btn btn-info">View</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="col-12 col-sm-4 col-md-4 col-lg-4">
+      <div class="card blog_card blog_card1">
+        <div class="card-header">
+          Popular Posts
+        </div>
+        <ul class="list-group list-group-flush">
+          {% for post in posts %}
+          <li class="list-group-item">
+            <a href="{{ post.get_absolute_url }}" class="my_link">{{ post.title }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+{% endblock %}
