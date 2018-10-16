@@ -20,24 +20,28 @@ def post_list(request, category_slug=None):
     categories = Category.objects.all()
     post_list = Post.objects.filter(draft=False).order_by("-updated_at")
 
-    paginator = Paginator(post_list, 10) # Show 10 contacts per page
-
-    page = request.GET.get('page')
-    posts = paginator.get_page(page)
-
-    query = request.GET.get("search")
-    print(posts)
-    if query:
-        posts = posts.filter(
-        Q(name__icontains=query) |
-        Q(description__icontains=query)
-        ).distinct
+    print("post_list1: ", post_list)
 
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         posts = Post.objects.filter(category=category).order_by("-updated_at")
 
-    print(posts)
+    query = request.GET.get("search")
+    if query:
+        post_list = post_list.filter(
+        Q(title__icontains=query) |
+        Q(description__icontains=query) |
+        Q(content__icontains=query)
+        )
+
+        print("post_list2: ", post_list)
+
+    paginator = Paginator(post_list, 10) # Show 10 contacts per page
+
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+
+    # print(posts)
     context = {
         'category': category,
         'categories': categories,

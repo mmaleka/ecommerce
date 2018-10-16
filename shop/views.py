@@ -24,25 +24,25 @@ def product_list(request, category_slug=None):
     products_list = Product.objects.filter(available=True).order_by("-updated_at")
     productsImage = ProductImage.objects.all()
 
-    paginator = Paginator(products_list, 10) # Show 25 contacts per page
-
-    page = request.GET.get('page')
-    products = paginator.get_page(page)
+    print(product_list)
 
     query = request.GET.get("search")
-
-    if category_slug:
-        category = get_object_or_404(Category, slug=category_slug)
-        products = Product.objects.filter(category=category).order_by("-updated_at")
-
-    print('products: ', products)
-
     if query:
-        products = products.filter(
+        products_list = products_list.filter(
         Q(name__icontains=query) |
         Q(description__icontains=query)
-        ).distinct
+        )
 
+
+    paginator = Paginator(products_list, 10)  # Show 10 contacts per page
+    page = request.GET.get('page')
+
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
 
 
     context = {
@@ -67,17 +67,19 @@ def product_list_by_category(request, category_slug=None):
         category = get_object_or_404(Category, slug=category_slug)
         products_list = Product.objects.filter(category=category).order_by("-updated_at")
 
+        query = request.GET.get("search")
+        if query:
+            products_list = products_list.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query)
+            )
+
         paginator = Paginator(products_list, 25) # Show 25 contacts per page
 
         page = request.GET.get('page')
         products = paginator.get_page(page)
 
-    query = request.GET.get("search")
-    if query:
-        products = products.filter(
-        Q(name__icontains=query) |
-        Q(description__icontains=query)
-        ).distinct
+
 
     context = {
         'category': category,
