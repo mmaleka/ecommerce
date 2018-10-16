@@ -22,7 +22,7 @@ class AddBanner(models.Model):
         im = Image.open(self.image)
         output = BytesIO()
         #Resize/modify the image
-        im = im.resize( (500,200) )
+        im = im.resize( (800,400) )
         #after modifications, save it to the output
         im.save(output, format='JPEG', quality=100)
         output.seek(0)

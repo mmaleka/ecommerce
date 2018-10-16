@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'comments.apps.CommentsConfig',
     'recommend.apps.RecommendConfig',
     'blog.apps.BlogConfig',
+    'tinymce',
 
     # Defaults
     'django.contrib.admin',
@@ -148,23 +149,37 @@ CART_SESSION_ID = 'cart'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-
-
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'mpho.maleka3@gmail.com'
 EMAIL_HOST_PASSWORD = 'MphoMaleka@@199009086829'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-
-
-
-# SEND_GRID_API_KEY = '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'
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_HOST_USER = 'mpho.maleka3@gmail.com'
-# EMAIL_HOST_PASSWORD = 'MphoMaleka@@199009086829'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = 'mpho.maleka3@gmail.com'
-# ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Contact email received from website'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 360,
+    'width': 1120,
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 20,
+    'selector': 'textarea',
+    'theme': 'modern',
+    'plugins': '''
+            textcolor save link image media preview codesample contextmenu
+            table code lists fullscreen  insertdatetime  nonbreaking
+            contextmenu directionality searchreplace wordcount visualblocks
+            visualchars code fullscreen autolink lists  charmap print  hr
+            anchor pagebreak
+            ''',
+    'toolbar1': '''
+            fullscreen preview bold italic underline | fontselect,
+            fontsizeselect  | forecolor backcolor | alignleft alignright |
+            aligncenter alignjustify | indent outdent | bullist numlist table |
+            | link image media | codesample |
+            ''',
+    'toolbar2': '''
+            visualblocks visualchars |
+            charmap hr pagebreak nonbreaking anchor |  code |
+            ''',
+    'contextmenu': 'formats | link image',
+    'menubar': True,
+    'statusbar': True,
+    }

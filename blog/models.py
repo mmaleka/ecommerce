@@ -6,6 +6,7 @@ from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.contrib.contenttypes.models import ContentType
 import sys
+from tinymce import HTMLField
 
 
 
@@ -32,7 +33,10 @@ class Post(models.Model):
     title = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=100, db_index=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
-    description = models.TextField(blank=True)
+    # description = models.TextField(blank=True)
+    # description = HTMLField()
+    description = models.TextField(max_length=250,null=True)
+    content = HTMLField('Content', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     draft = models.BooleanField(default=True)
     updated_at = models.DateTimeField(auto_now=True)

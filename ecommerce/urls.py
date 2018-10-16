@@ -26,6 +26,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('', include('shop.urls')),
     path('accounts/', include('accounts.urls')),
+    path('tinymce/', include('tinymce.urls')),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

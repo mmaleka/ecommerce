@@ -60,7 +60,7 @@
             <h4 class="card-title">{{ post.title }}</h4>
           </a>
           <p class="card-text text-muted">By: {{ post.author.first_name }} {{ post.author.last_name }}</p>
-          <p class="card-text text-muted blog_card_text">{{ post.description }}</p>
+          <p class="card-text text-muted">{{ post.description|safe }}</p>
           <a href="{{ post.get_absolute_url }}" class="btn btn-info">View</a>
         </div>
       </div>
