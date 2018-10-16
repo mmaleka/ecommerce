@@ -60,6 +60,14 @@
             <h4 class="card-title">{{ post.title }}</h4>
           </a>
           <p class="card-text text-muted">By: {{ post.author.first_name }} {{ post.author.last_name }}</p>
+          <!-- <p> -->
+            <!-- <a href="https://plus.google.com/share?url=http://your-domain{{ request.get_full_path|urlencode }}">
+              <li class="fa fa-facebook-square fa-3x"></li>
+            </a> -->
+            <!-- Go to www.addthis.com/dashboard to customize your tools -->
+            <!-- <div class="addthis_inline_share_toolbox"></div>-->
+
+          <!-- </p> -->
           <p class="card-text text-muted">{{ post.description|safe }}</p>
           <a href="{{ post.get_absolute_url }}" class="btn btn-info">View</a>
         </div>
