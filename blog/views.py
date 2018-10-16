@@ -6,7 +6,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 from django.db.models import Q
 from .models import Category, Post
-from analytics.models import ViewsCount
+from analytics.models import PostViewsCount
 from comments.models import Comment
 from comments.forms import CommentForm
 import re
@@ -69,6 +69,16 @@ def post_detail(request, id, slug):
     region=data['region']
 
     address = str(str(city)+'-'+str(country)+'-'+str(region))
+
+    view, created = PostViewsCount.objects.get_or_create(
+        user = str(request.user),
+        post = str(post),
+        ip_address = str(IP),
+        address = address
+    )
+    if view:
+        view.views_count += 1
+        view.save()
 
     # view, created = ViewsCount.objects.get_or_create(
     #     user = str(request.user),
