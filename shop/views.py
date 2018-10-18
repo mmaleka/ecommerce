@@ -16,6 +16,17 @@ import json
 from urllib.request import urlopen
 
 
+def get_ip(request):
+    try:
+        x_forward = request.META.get("HTTP_X_FORWARED_FOR")
+        if x_forward:
+            ip = x_forward.split(",")[0]
+        else:
+            ip = request.META.get("REMOTE_ADDR")
+    except Exception as e:
+        ip = ""
+
+
 def product_list(request, category_slug=None):
     search_term = ''
     category = None
@@ -93,16 +104,24 @@ def product_list_by_category(request, category_slug=None):
 def product_detail(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
 
-    # Get user ip adress:
-    url = 'http://ipinfo.io/json'
-    response = urlopen(url)
-    data = json.load(response)
+    ip_adress = get_ip(request)
+    try:
+        IP=ip_adress['ip']
+        org=ip_adress['org']
+        city = ip_adress['city']
+        country=ip_adress['country']
+        region=ip_adress['region']
+    except Exception as e:
+        # Get user ip adress:
+        url = 'http://ipinfo.io/json'
+        response = urlopen(url)
+        data = json.load(response)
 
-    IP=data['ip']
-    org=data['org']
-    city = data['city']
-    country=data['country']
-    region=data['region']
+        IP=data['ip']
+        org=data['org']
+        city = data['city']
+        country=data['country']
+        region=data['region']
 
     address = str(str(city)+'-'+str(country)+'-'+str(region))
 

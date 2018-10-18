@@ -4,6 +4,7 @@ from shop.models import Product, ProductImage
 from .cart import Cart
 from .forms import CartAddProductForm
 from analytics.models import CartItemsCount
+from shop.views import get_ip
 import re
 import json
 from urllib.request import urlopen
@@ -38,16 +39,24 @@ def cart_detail(request):
             print(k, v)
     print(cartItems)
 
-    # Get user ip adress:
-    url = 'http://ipinfo.io/json'
-    response = urlopen(url)
-    data = json.load(response)
+    ip_adress = get_ip(request)
+    try:
+        IP=ip_adress['ip']
+        org=ip_adress['org']
+        city = ip_adress['city']
+        country=ip_adress['country']
+        region=ip_adress['region']
+    except Exception as e:
+        # Get user ip adress:
+        url = 'http://ipinfo.io/json'
+        response = urlopen(url)
+        data = json.load(response)
 
-    IP=data['ip']
-    org=data['org']
-    city = data['city']
-    country=data['country']
-    region=data['region']
+        IP=data['ip']
+        org=data['org']
+        city = data['city']
+        country=data['country']
+        region=data['region']
 
     address = str(str(city)+'-'+str(country)+'-'+str(region))
 

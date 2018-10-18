@@ -9,9 +9,11 @@ from .models import Category, Post
 from analytics.models import PostViewsCount
 from comments.models import Comment
 from comments.forms import CommentForm
+from shop.views import get_ip
 import re
 import json
 from urllib.request import urlopen
+
 
 
 def post_list(request, category_slug=None):
@@ -19,8 +21,6 @@ def post_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()
     post_list = Post.objects.filter(draft=False).order_by("-updated_at")
-
-    print("post_list1: ", post_list)
 
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
@@ -52,23 +52,33 @@ def post_list(request, category_slug=None):
     return render(request, 'posts/post_list.html', context)
 
 def post_detail(request, id, slug):
+    print("ip_address: ", request.META.get("REMOTE_ADDR"))
+    print("ip_address x_forwared_for: ", request.META.get("HTTP_X_FORWARED_FOR"))
     post_list = Post.objects.filter(draft=False).order_by("-updated_at")
-    print('post_list:', post_list)
     post = get_object_or_404(Post, id=id, slug=slug)
 
 
-    # Get user ip adress:
-    url = 'http://ipinfo.io/json'
-    response = urlopen(url)
-    data = json.load(response)
+    ip_adress = get_ip(request)
+    try:
+        IP=ip_adress['ip']
+        org=ip_adress['org']
+        city = ip_adress['city']
+        country=ip_adress['country']
+        region=ip_adress['region']
+    except Exception as e:
+        # Get user ip adress:
+        url = 'http://ipinfo.io/json'
+        response = urlopen(url)
+        data = json.load(response)
 
-    IP=data['ip']
-    org=data['org']
-    city = data['city']
-    country=data['country']
-    region=data['region']
+        IP=data['ip']
+        org=data['org']
+        city = data['city']
+        country=data['country']
+        region=data['region']
 
     address = str(str(city)+'-'+str(country)+'-'+str(region))
+    print("address: ", address)
 
     view, created = PostViewsCount.objects.get_or_create(
         user = str(request.user),
@@ -79,18 +89,6 @@ def post_detail(request, id, slug):
     if view:
         view.views_count += 1
         view.save()
-
-    # view, created = ViewsCount.objects.get_or_create(
-    #     user = str(request.user),
-    #     product = str(product),
-    #     ip_address = str(IP),
-    #     address = address
-    # )
-    # if view:
-    #     view.views_count += 1
-    #     view.save()
-
-
 
     initial_data = {
         "content_type": post.get_content_type,

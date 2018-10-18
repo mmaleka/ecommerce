@@ -18,6 +18,7 @@ from orders.models import Order, OrderItem
 # from accounts.forms import RegistrationForm
 from shop.models import Product, ProductImage
 from analytics.models import RegisterCount
+from shop.views import get_ip
 import re
 import json
 from urllib.request import urlopen
@@ -56,16 +57,24 @@ def login_view(request):
 def register_view(request):
     form = UserRegisterForm(request.POST or None)
 
-    # Get user ip adress:
-    url = 'http://ipinfo.io/json'
-    response = urlopen(url)
-    data = json.load(response)
+    ip_adress = get_ip(request)
+    try:
+        IP=ip_adress['ip']
+        org=ip_adress['org']
+        city = ip_adress['city']
+        country=ip_adress['country']
+        region=ip_adress['region']
+    except Exception as e:
+        # Get user ip adress:
+        url = 'http://ipinfo.io/json'
+        response = urlopen(url)
+        data = json.load(response)
 
-    IP=data['ip']
-    org=data['org']
-    city = data['city']
-    country=data['country']
-    region=data['region']
+        IP=data['ip']
+        org=data['org']
+        city = data['city']
+        country=data['country']
+        region=data['region']
 
     address = str(str(city)+'-'+str(country)+'-'+str(region))
 
@@ -92,7 +101,7 @@ def register_view(request):
             }
     return render(request, "accounts/form.html", context)
 
-# 
+#
 # def password_reset_view(request):
 #     password_reset(request)
 
