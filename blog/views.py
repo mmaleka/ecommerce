@@ -32,7 +32,7 @@ def post_list(request, category_slug=None):
         Q(title__icontains=query) |
         Q(description__icontains=query) |
         Q(content__icontains=query)
-        )
+        ).distinct()
 
         print("post_list2: ", post_list)
 

@@ -31,7 +31,7 @@ def product_list(request, category_slug=None):
         products_list = products_list.filter(
         Q(name__icontains=query) |
         Q(description__icontains=query)
-        )
+        ).distinct()
 
 
     paginator = Paginator(products_list, 10)  # Show 10 contacts per page
@@ -72,7 +72,7 @@ def product_list_by_category(request, category_slug=None):
             products_list = products_list.filter(
             Q(name__icontains=query) |
             Q(description__icontains=query)
-            )
+            ).distinct()
 
         paginator = Paginator(products_list, 25) # Show 25 contacts per page
 
