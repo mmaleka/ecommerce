@@ -12,19 +12,27 @@ from analytics.models import ViewsCount
 from comments.models import Comment
 from comments.forms import CommentForm
 import re
+from ipware import get_client_ip
 import json
 from urllib.request import urlopen
 
 
 def get_ip(request):
     try:
-        x_forward = request.META.get("HTTP_X_FORWARED_FOR")
-        if x_forward:
-            ip = x_forward.split(",")[0]
-        else:
+        client_ip, is_routable = get_client_ip(request)
+        if client_ip is None:
             ip = request.META.get("REMOTE_ADDR")
+        else:
+            if is_routable:
+                ip = ip
+            else:
+                ip = ip
     except Exception as e:
         ip = ""
+
+    return ip
+
+
 
 
 def product_list(request, category_slug=None):
