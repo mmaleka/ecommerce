@@ -21,6 +21,7 @@
         {% if request.user.is_authenticated %}
 
         <form action="." method="post" class="myFormCheckOut">
+        <!-- <form action="https://www.payfast.co.za/eng/process" name="form_acb3a02cbae5911e1a0eb6a0837430f8" onsubmit="return click_acb3a02cbae5911e1a0eb6a0837430f8( this );" method="post" class="myFormCheckOut"> -->
           {% csrf_token %}
           <div class="form-group">
             <label for="inputAddress">Address</label>
@@ -41,16 +42,83 @@
             {{ form.shipping }}
           </div>
           <div class="form-group">
-            <label for="inputAddress">Payment Method</label>
+            <label for="inputAddress">Make Payment Via PayFast then Submit Order</label>
+            <br>
             {{ form.payment_method }}
-            <p>For EFT payment deposit money into this number: <strong>082 904 6234</strong></p>
+            <!-- <p>For EFT payment deposit money into this number: <strong>082 904 6234</strong></p> -->
+
+            <!-- <form action="https://www.payfast.co.za/eng/process" name="form_acb3a02cbae5911e1a0eb6a0837430f8" onsubmit="return click_acb3a02cbae5911e1a0eb6a0837430f8( this );" method="post"> -->
+            <!-- <input type="hidden" name="cmd" value="_paynow">
+            <input type="hidden" name="receiver" value="11380811">
+            <input type="hidden" name="item_name" value="test item">
+            <input type="hidden" name="amount" value="100.00">
+            <input type="hidden" name="item_description" value="">
+            <input type="hidden" name="return_url" value="http://127.0.0.1:8000/orders/create/">
+            <input type="hidden" name="cancel_url" value="http://127.0.0.1:8000/orders/create/">
+
+            <table>
+            <tr><td colspan=2 align=center><input type="image" src="https://www.payfast.co.za/images/buttons/light-large-paynow.png" width="174" height="59" alt="Pay Now" title="Pay Now with PayFast"></td></tr></table> -->
+            <!-- </form> -->
+
+            <a href="https://www.payfast.co.za/eng/process?cmd=_paynow&amp;
+            receiver=11380811&amp;
+            item_name={{ totail_items }} item{{ totail_items|pluralize }}&amp;
+            amount={{ cart.get_total_price }}&amp;
+            return_url=http%3A%2F%2Fwww.gearacademy.co.za%2Forders%2Fcreate%2F&amp;
+            cancel_url=http%3A%2F%2Fwww.gearacademy.co.za%2Forders%2Fcreate%2F">
+            <img src="https://www.payfast.co.za/images/buttons/light-large-paynow.png"
+            alt="Pay"
+            title="Pay Now with PayFast" />
+            </a>
+          </div>
+          <div class="form-group">
+
           </div>
           <div class="row justify-content-around">
-            <div class="col-sm-12 col-md-3 col-lg-3 text-center">
-              <input class="btn btn-primary btn-block" type="submit" value="Submit order" />
+            <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+
+              <input class="btn btn-info btn-block" type="submit" value="Submit order" />
             </div>
           </div>
         </form>
+
+        <!-- <h1>{{ request.user.first_name }}</h1>
+        <h1>{{ request.user.last_name }}</h1>
+        <h1>{{ request.user.email }}</h1>
+        <h1>{{ last_order }}</h1> -->
+
+        <form action="https://sandbox.payfast.co.za/eng/process" method="POST">
+
+        <input type="hidden" name="merchant_id" value="10000100">
+        <input type="hidden" name="merchant_key" value="46f0cd694581a">
+        <!-- <input type="hidden" name="return_url" value="https://www.yoursite.com/return">
+        <input type="hidden" name="cancel_url" value="https://www.yoursite.com/cancel">
+        <input type="hidden" name="notify_url" value="https://www.yoursite.com/notify"> -->
+
+        <input type="hidden" name="name_first" value="{{ request.user.first_name }}">
+        <input type="hidden" name="name_last" value="{{ request.user.last_name }}">
+        <input type="hidden" name="email_address" value="{{ request.user.email }}">
+        <input type="hidden" name="cell_number" value="">
+
+        <input type="hidden" name="m_payment_id" value="{{ last_order }}">
+        <input type="hidden" name="amount" value="{{ cart.get_total_price }}">
+        <input type="hidden" name="item_name" value="{{ totail_items }} item{{ totail_items|pluralize }}">
+        <!-- <input type="hidden" name="item_description" value="A test product">
+        <input type="hidden" name="custom_int1" value="2">
+        <input type="hidden" name="custom_str1" value="Extra order information"> -->
+
+        <input type="hidden" name="email_confirmation" value="1">
+        <input type="hidden" name="confirmation_address" value="{{ request.user.email }}">
+
+        <!-- <input type="hidden" name="payment_method" value="cc"> -->
+
+        <!-- <input type="hidden" name="signature" value="f103e22c0418655fb03991538c51bfd5"> -->
+
+        <!-- <input class="btn btn-primary btn-block" type="submit" value="Submit order" /> -->
+
+        </form>
+
+
 
 
         <br>
@@ -89,7 +157,18 @@
 
     <div class="col-sm-12 col-md-6 col-lg-6 text-center">
 
-      <h5>My Order</h5>
+      <h5>My Shopping Order: <span class="badge">
+          {% with totail_items=cart|length %}
+              {% if cart|length > 0 %}
+
+                  <a href="{% url "cart:cart_detail" %}" style="">
+                      {{ totail_items }} item{{ totail_items|pluralize }}, R {{ cart.get_total_price }}
+                  </a>
+                  {% else %}
+                  Your cart is empty.
+              {% endif %}
+          {% endwith %}</span>
+        </h5>
 
         <ul class="list-group myListGruopCheckOut">
           {% for item in cart %}
@@ -111,3 +190,12 @@
 </div>
 
 {% endblock %}
+
+<script language="JavaScript" type="text/javascript">
+
+function click_acb3a02cbae5911e1a0eb6a0837430f8( aform_reference ) {
+var aform = aform_reference;
+aform['amount'].value = Math.round( aform['amount'].value*Math.pow( 10,2 ) )/Math.pow( 10,2 );
+}
+
+</script>

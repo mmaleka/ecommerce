@@ -46,6 +46,7 @@ class UserRegisterForm(forms.ModelForm):
             'username',
             'first_name',
             'last_name',
+            # 'cellphone',
             'email',
             'email2',
             'password'

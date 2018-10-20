@@ -10,6 +10,7 @@ def order_create(request):
 
     cart = Cart(request)
     orders = Order.objects.all()
+    last_order = orders[0]
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
         if form.is_valid():
@@ -54,8 +55,8 @@ def order_create(request):
     else:
         form = OrderCreateForm()
 
-    print('orders: ', orders)
     context = {
+    'last_order': last_order,
     'form': form,
     'orders': orders
     }
