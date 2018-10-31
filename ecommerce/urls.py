@@ -24,9 +24,12 @@ urlpatterns = [
     path('orders/', include('orders.urls')),
     path('contact/', include('contact.urls')),
     path('blog/', include('blog.urls')),
+    path('addBanner/', include('addBanner.urls')),
     path('', include('shop.urls')),
     path('accounts/', include('accounts.urls')),
+    path('wishList/', include('wishList.urls')),
     path('tinymce/', include('tinymce.urls')),
+
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

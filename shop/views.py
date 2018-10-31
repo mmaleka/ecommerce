@@ -8,6 +8,7 @@ from django.db.models import Q
 from .models import Category, Product, ProductImage
 from addBanner.models import AddBanner
 from cart.forms import CartAddProductForm
+from wishList.models import WishList
 from analytics.models import ViewsCount
 from comments.models import Comment
 from comments.forms import CommentForm
@@ -111,6 +112,10 @@ def product_list_by_category(request, category_slug=None):
 
 def product_detail(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
+    wishList_obj, new_obj = WishList.objects.new_or_get(request)
+    wishList_obj_all = wishList_obj.products.all()
+    print("wishList_obj_all: ", wishList_obj_all)
+
 
     ip_adress = get_ip(request)
     try:
@@ -185,5 +190,6 @@ def product_detail(request, id, slug):
         'productsImages': productsImage,
         'comments': comments,
         'comment_form': form,
+        'wishList': wishList_obj_all,
     }
     return render(request, 'shop/product/detail.html', context)

@@ -1,0 +1,67 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% load staticfiles %}
+
+{% block title %}
+    {% if category %}
+    GearAcademy | {{ adds.name }}
+    {% else %}
+    GearAcademy | More details
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-around my-row-adds-info1">
+
+    <div class="col-sm-6 col-md-6 col-lg-6 text-center my-col-adds-info1">
+      <img class="img-responsive"
+      width="350" height="300"
+      src="{% if addsImages.first.imageMore %} {{ addsImages.first.imageMore.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
+      alt="">
+    </div>
+
+    <div class="col-sm-6 col-md-6 col-lg-6 my-col-adds-info1-1">
+      <h1>{{ add.description1 }}</h1>
+
+      <a href="{{ product.get_absolute_url }}" class="btn btn-outline-info btn-lg btn-info1" role="button">
+        Get This Now
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="row justify-content-around my-row-adds-info2" id="testimonial">
+    <div class="col-sm-12 col-md-12 col-lg-12 my-col-adds-info2">
+      <p>{{ add.description2 }}</p>
+    </div>
+  </div>
+
+
+  <div class="row justify-content-around my-row-adds-info3">
+
+    <div class="col-sm-12 col-md-6 col-lg-6 my-col-adds-info3">
+      <h2>{{ add.description3 }}</h2>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+      <img class="img-responsive"
+      width="350" height="300"
+      src="{% if addsImages.first.imageMore %} {{ addsImages.last.imageMore.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
+      alt="">
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}

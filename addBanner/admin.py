@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AddBanner
+from .models import AddBanner, AddBannerImage
 
 # Register your models here.
 
@@ -8,4 +8,15 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
-admin.site.register(AddBanner, CategoryAdmin)
+class AddBannerImageInline(admin.TabularInline):
+    model = AddBannerImage
+    extra = 3
+
+class AddBannerAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'created_at', 'updated_at']
+    list_filter = ['name', 'created_at', 'updated_at']
+    prepopulated_fields = {'slug': ('name',)}
+    inlines = [AddBannerImageInline]
+
+
+admin.site.register(AddBanner, AddBannerAdmin)

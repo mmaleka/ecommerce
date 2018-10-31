@@ -1,0 +1,22 @@
+<h1>Hello from snippets</h1>
+
+
+<form method='POST' action='{% url "wishList:update" %}' class='form'> {% csrf_token %}
+
+  <input type="hidden" name="product_id" value="{{ product.id }}">
+
+  {% for object in wishList %}
+  {% if product.name == object.name %}
+    <!-- {{ product.get_absolute_url }} -->
+  <button type="submit" class="btn btn-link">Remove from wish list</button>
+  {% else %}
+  <button type="submit" class="btn btn-link">Add to wish list</button>
+  {% endif %}
+  {% endfor %}
+
+  {% if wishList %}
+  {% else %}
+  <button type="submit" class="btn btn-link">Add to wish list</button>
+  {% endif %}
+
+</form>

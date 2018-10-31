@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'recommend.apps.RecommendConfig',
     'blog.apps.BlogConfig',
     'tinymce',
+    'wishList.apps.WishlistConfig',
 
     # Defaults
     'django.contrib.admin',

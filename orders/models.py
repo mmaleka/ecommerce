@@ -24,14 +24,21 @@ class Order(models.Model):
     )
     payment_method = models.CharField(max_length=2, choices=payment_Choices, default='Pay on delivery')
     paid = models.BooleanField(default=False)
+    # status_Choices = (
+    # ('PP', 'Processing payment'),
+    # ('PR', 'Payment received'),
+    # ('PO', 'Processing order'),
+    # ('ID', 'Items dispatched'),
+    # ('IR', 'Items received'),
+    # )
     status_Choices = (
-    ('PP', 'Processing payment'),
-    ('PR', 'Payment received'),
-    ('PO', 'Processing order'),
-    ('ID', 'Items dispatched'),
-    ('IR', 'Items received'),
+    ('processing_payment', 'Processing payment'),
+    ('payment_received', 'Payment received'),
+    ('processing_order', 'Processing order'),
+    ('items_dispatched', 'Items dispatched'),
+    ('items_received', 'Items received'),
     )
-    status = models.CharField(max_length=2, choices=status_Choices, default='Processing payment')
+    status = models.CharField(max_length=120, choices=status_Choices, default='Processing payment')
 
     class Meta:
         ordering = ('-created', )

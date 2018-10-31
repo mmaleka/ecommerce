@@ -55,16 +55,7 @@
 
       <h3 class="font-weight-bold text-capitalize">{{ product.name }}</h3>
       <br>
-      <!-- <a class="facebookShare" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank">
-        <li class="fa fa-facebook-square fa-3x"></li>
-      </a> -->
       <div class="addthis_inline_share_toolbox"></div>
-      <!-- <a href="http://www.linkedin.com/shareArticle?url={{ request.build_absolute_uri|urlencode }}&title=<{{ product.name }}>&summary=<your desc>&source=http://your-domain" target="_blank">
-        <li class="fa fa-linkedin-square fa-3x"></li>
-      </a>
-      <a href="http://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank">
-        <li class="fa fa-facebook-square fa-3x"></li>
-      </a> -->
       <hr class="style1">
 
       <h2 class="font-weight-bold text-capitalize text-danger">R {{ product.price }}</h2>
@@ -72,6 +63,7 @@
       <h6 class="my-text">Warranty:  {{ product.warranty }}</h6>
       <h6 class="my-text">Barcode:  {{ product.barcode }}</h6>
       <h6 class="my-text">Hassle-Free Exchanges & Returns for 30 Days</h6>
+
 
     </div>
 
@@ -88,6 +80,15 @@
               </p>
               <button class="btn btn-primary btn-block"><i class="fa fa-lg fa-shopping-cart"></i> Add to cart</button>
           </form>
+
+          <!-- {% url 'wishList:update' %}
+          {% url 'accounts:profile_view' %}
+          {% include 'shop/product/snippets/update-cart.html' with product=product wishList=wishList%} -->
+
+
+
+
+
 
           <div class="text-left text-muted">
 

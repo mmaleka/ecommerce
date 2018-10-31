@@ -62,6 +62,10 @@ h1,h2,h3,h4,h5,h6 {
   padding: 0px 0px 0px 0px;
 }
 
+.my_slider:hover {
+  cursor: pointer;
+}
+
 .body {
   padding: 30px;
 }
@@ -191,4 +195,97 @@ body {
 
 .h1_text{
   margin-top: 20px;
+}
+
+
+.cont .btnViewMore {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    /* background-color: #555; */
+    /* color: white; */
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.cont .btnArroyLeft {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    /* background-color: #555; */
+    /* color: white; */
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.cont .btnArroyRight {
+    position: absolute;
+    top: 50%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    /* background-color: #555; */
+    /* color: white; */
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.cont {
+    position: relative;
+    width: 100%;
+}
+
+.my-row-adds-info1 {
+  margin-top: 30px;
+}
+
+.my-row-adds-info2 {
+  margin-top: 30px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.my-row-adds-info3 {
+  margin-top: 30px;
+}
+
+.my-col-adds-info1-1 {
+  margin-top: 50px;
+}
+
+p{
+  font-family:Roboto;
+}
+
+#testimonial{
+  background:#f1f1f1;
+  padding: 50px 0 30px 0;
+  text-align:center;
+  margin-top:40px;
+}
+
+#testimonial p{
+  font-size:21px;
+  font-family: 'Josefin Sans';
+  color:#000;
+}
+
+.btn-info1 {
+  margin-top: 30px;
 }

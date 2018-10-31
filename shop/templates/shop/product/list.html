@@ -76,14 +76,27 @@
     <div class="col-sm-12 col-md-8 col-lg-8">
 
       <div class="row justify-content-right my_slider">
-        <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="col-sm-12 col-md-12 col-lg-12 cont">
           {% for add in adds %}
-            <img name="ImageSliderList" src="{{ add.image.url }}" alt="">
+            <img name="ImageSliderList" href="{{ add.get_absolute_url }}" src="{{ add.image.url }}" alt="">
+            <!-- <button type="button" id = "btnView" class="btnViewMore btn btn-light">View More</button> -->
+            <button onclick="changeImgWithButtonPrev()" type="button" class="btnArroyLeft btn btn-dark">
+              <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            </button>
+            <button onclick="changeImgWithButtonForward()" type="button" class="btnArroyRight btn btn-dark">
+              <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </button>
           {% endfor %}
-            <img id="{{ productsImage.id }}"
-            name="slide"
-            class="img-fluid"
-            >
+
+            <a id=slideHref>
+              <img onmouseover="stopCount()"
+                onmouseout="startCount()"
+                id="{{ productsImage.id }}"
+                name="slide"
+                class="img-fluid"
+              >
+            </a>
+
         </div>
       </div>
 
