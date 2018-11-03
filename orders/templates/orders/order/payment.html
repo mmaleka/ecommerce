@@ -1,0 +1,103 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}
+    Your Shopping Cart| Thank you
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+
+  <div class="row mb-5 my-row-cart">
+    <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+        <!-- {% include 'orders/order/orderProgress.html' %} -->
+        <ul class="progress-indicator">
+          <li class="completed"> <span class="bubble"></span> Review your order. </li>
+          <li class="completed"> <span class="bubble"></span> Payment. </li>
+          <li> <span class="bubble"></span> Done. </li>
+        </ul>
+
+    </div>
+  </div>
+
+  <div class="row mb-5 my-row-cart">
+
+    <div class="col-sm-12 col-md-12 col-lg-12 text-center my-col-mainImage">
+      <img src="{% static "img/checkMark.png" %}" alt="My image" width="80">
+      <h2>Thank you {{ order.first_name }} for your order!</h2>
+    </div>
+
+  </div>
+
+  <div class="row justify-content-around">
+
+    <div class="col-sm-12 col-md-3 col-lg-3 text-center" style="padding: 5px">
+      <h4>Order Number</h4>
+      <p>{{ order.id }}</p>
+    </div>
+
+    <div class="col-sm-12 col-md-3 col-lg-3 text-center" style="padding: 5px">
+      <h4>Shipping address</h4>
+      <p>{{ order.address }}, {{ order.postal_code }}, {{ order.city }}</p>
+    </div>
+
+    <div class="col-sm-12 col-md-3 col-lg-3 text-center" style="padding: 5px">
+      <h4>Payable Amount</h4>
+      <p>R {{ order.total_price }}</p>
+    </div>
+
+  </div>
+
+  <div class="row justify-content-around">
+
+    <div class="col-sm-12 col-md-8 col-lg-8 text-center" style="padding: 5px">
+      <p>Please make payment via the secure PayFast to complete the order</p>
+    </div>
+
+    </div>
+
+  <div class="row justify-content-around">
+
+    <div class="col-sm-12 col-md-3 col-lg-3 text-center" style="padding: 5px">
+
+      <form action="https://www.payfast.co.za/eng/process" name="form_acb3a02cbae5911e1a0eb6a0837430f8" onsubmit="return click_acb3a02cbae5911e1a0eb6a0837430f8( this );" method="post">
+      <input type="hidden" name="cmd" value="_paynow">
+      <input type="hidden" name="receiver" value="11380811">
+      <input type="hidden" name="item_name" value="Order Number: {{ order.id }}">
+      <input type="hidden" name="amount" value="{{ order.total_price }}">
+      <input type="hidden" name="item_description" value="">
+      <input type="hidden" name="return_url" value="http://www.gearacademy.co.za/orders/created/">
+      <input type="hidden" name="cancel_url" value="http://www.gearacademy.co.za/">
+
+      <a role="button">
+        <input type="image"
+        src="https://www.payfast.co.za/images/buttons/light-large-paynow.png"
+        width="174" height="59"
+        class="img-responsive"
+        alt="Pay Now"
+        title="Pay Now with PayFast">
+      </a>
+
+      <!-- <table>
+      <tr><td colspan=2 align=center><input type="image" src="https://www.payfast.co.za/images/buttons/light-large-paynow.png" width="174" height="59" alt="Pay Now" title="Pay Now with PayFast"></td></tr>
+      </table> -->
+      </form>
+    </div>
+
+  </div>
+
+</div>
+
+<br>
+
+{% endblock %}
+
+<script language="JavaScript" type="text/javascript">
+
+function click_acb3a02cbae5911e1a0eb6a0837430f8( aform_reference ) {
+var aform = aform_reference;
+aform['amount'].value = Math.round( aform['amount'].value*Math.pow( 10,2 ) )/Math.pow( 10,2 );
+}
+
+</script>

@@ -52,3 +52,53 @@ try {
 } catch (e) {
   console.log("Error changing product review text area", e);
 }
+
+
+
+
+function shippingChoices(freeDelivery, payDeliverly) {
+  var shipping = document.getElementById('id_shipping');
+  // var payfast = document.getElementById('payfast')[0].setAttribute("amount", 123); ;
+  // console.log(payfast);
+  var strUser = shipping.options[shipping.selectedIndex].value;
+  if (strUser == 'FD') {
+    var get_total_price_with_free_shipping = document.getElementById('get_total_price_with_shipping').innerHTML="R "+freeDelivery;
+  } else if (strUser == 'PL') {
+    var get_total_price_with_pay_shipping = document.getElementById('get_total_price_with_shipping').innerHTML="R "+payDeliverly;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//

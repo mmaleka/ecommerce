@@ -14,7 +14,7 @@ class OrderCreateForm(forms.ModelForm):
 
     shipping_Choices = (
     ('FD', 'Free delivery (Free) - 20 to 37 days'),
-    ('PL', 'Priority delivery (R 99.00) - 4 to 15 days'),
+    ('PL', 'Priority delivery (R 40.00) - 4 to 15 days'),
     )
 
     class Meta:

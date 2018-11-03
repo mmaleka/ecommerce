@@ -11,10 +11,11 @@ class Order(models.Model):
     city = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     shipping_Choices = (
     ('FD', 'Free delivery (Free) - 20 to 37 days'),
-    ('PL', 'Priority delivery (R 99.00) - 4 to 15 days'),
+    ('PL', 'Priority delivery (R 40.00) - 4 to 15 days'),
     )
     shipping = models.CharField(max_length=2, choices=shipping_Choices, default='Free delivery - 20 to 37 days')
 

@@ -37,7 +37,10 @@ def cart_detail(request):
         cartItems.append(item)
         for k, v in item.items():
             print(k, v)
-    print(cartItems)
+
+    # Add 30 for shipping
+    total_price_shipping = cart.get_total_price_with_shipping()
+    print("total_price_shipping=", total_price_shipping)
 
     ip_adress = get_ip(request)
     try:
@@ -75,6 +78,7 @@ def cart_detail(request):
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
     context = {
         'cart': cart,
-        'productsImages': productsImage
+        'productsImages': productsImage,
+        'total_price_shipping': total_price_shipping
     }
     return render(request, 'cart/detail.html', context)

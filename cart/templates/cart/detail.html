@@ -12,15 +12,18 @@
 
 <div class="container">
 
-  <div class="row mb-5">
+  <div class="row mb-5 my-row-cart">
 
     <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+      <div class="alert alert-warning" role="alert">
+        <h5>Buy more than R 400 and get 10% discount!</h5>
+      </div>
       <p>MY SHOPPING CART: <span class="badge">
           {% with totail_items=cart|length %}
               {% if cart|length > 0 %}
                   My Shopping Order:
                   <a href="{% url "cart:cart_detail" %}" style="">
-                      {{ totail_items }} item{{ totail_items|pluralize }}, R {{ cart.get_total_price }}
+                      {{ totail_items }} item{{ totail_items|pluralize }}, R {{ cart.get_total_price_discountTOTAL }}
                   </a>
                   {% else %}
                   Your cart is empty.
@@ -87,25 +90,53 @@
           <p class="card-text text-muted">Your shopping cart reflects the latest prices and stock available.</p>
 
           <div class="row justify-content-around">
-            <div class="col-sm-6 col-md-3 col-lg-3 text-center">
+            <div class="col-sm-6 col-md-4 col-lg-4 text-center">
               <p class="font-weight-bold textCheckout">45 days</p>
               <p class="textCheckout">Money Back Guarantee</p>
             </div>
 
-            <div class="col-sm-6 col-md-3 col-lg-3 text-center">
+            <div class="col-sm-6 col-md-4 col-lg-4 text-center">
 
               <table class="table table-borderless">
                 <tbody>
                   <tr>
                     {% with totail_items=cart|length %}
                       {% if cart|length > 0 %}
-                        <td><p class="font-weight-bold textCheckout">Total </p></td>
-                        <td><p class="font-weight-bold text-capitalize text-danger">R {{ cart.get_total_price }}</p></td>
-                      {% else %}
-                      Your cart is empty.
+                        <td><p class="font-weight-bold textCheckout">Product Amount </p></td>
+                        <td><p class="font-weight-bold text-capitalize">R {{ cart.get_total_price }}</p></td>
                   {% endif %}
-              {% endwith %}
+                  {% endwith %}
                   </tr>
+
+                  <tr>
+                    {% with totail_items=cart|length %}
+                      {% if cart|length > 0 %}
+                        <td><p class="font-weight-bold textCheckout">Discount @10% </p></td>
+                        {% if cart.get_total_price > 400 %}
+                        <td><p class="font-weight-bold text-capitalize">R {{ cart.get_total_price_discountAMOUNT }}</p></td>
+                        {% else %}
+                        <td><p class="font-weight-bold text-capitalize">R 0.00</p></td>
+                        {% endif %}
+                      {% endif %}
+                    {% endwith %}
+                  </tr>
+
+                  <tr>
+                    {% with totail_items=cart|length %}
+                      {% if cart|length > 0 %}
+                        <td><p class="font-weight-bold textCheckout">Total Amount </p></td>
+                        {% if cart.get_total_price > 400 %}
+                        <td><p class="font-weight-bold text-capitalize text-danger">R {{ cart.get_total_price_discountTOTAL }}</p></td>
+                        {% else %}
+                        <td><p class="font-weight-bold text-capitalize text-danger">R {{ cart.get_total_price }}</p></td>
+                        {% endif %}
+                      {% else %}
+                      <td><p class="font-weight-bold textCheckout">Your cart is empty.</p></td>
+                      {% endif %}
+                    {% endwith %}
+                  </tr>
+
+
                 </tbody>
               </table>
               <!-- table end here -->
