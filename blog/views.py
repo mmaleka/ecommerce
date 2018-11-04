@@ -9,10 +9,13 @@ from .models import Category, Post
 from analytics.models import PostViewsCount
 from comments.models import Comment
 from comments.forms import CommentForm
+from recommend.views import recommended_product_list
+from shop.models import Category, Product, ProductImage
 from shop.views import get_ip
 import re
 import json
 from urllib.request import urlopen
+import random
 
 
 
@@ -34,7 +37,7 @@ def post_list(request, category_slug=None):
         Q(content__icontains=query)
         ).distinct()
 
-        print("post_list2: ", post_list)
+        # print("post_list2: ", post_list)
 
     paginator = Paginator(post_list, 10) # Show 10 contacts per page
 
@@ -52,10 +55,15 @@ def post_list(request, category_slug=None):
     return render(request, 'posts/post_list.html', context)
 
 def post_detail(request, id, slug):
-    print("ip_address: ", request.META.get("REMOTE_ADDR"))
-    print("ip_address x_forwared_for: ", request.META.get("HTTP_X_FORWARED_FOR"))
+    # print("ip_address: ", request.META.get("REMOTE_ADDR"))
+    # print("ip_address x_forwared_for: ", request.META.get("HTTP_X_FORWARED_FOR"))
+
     post_list = Post.objects.filter(draft=False).order_by("-updated_at")
     post = get_object_or_404(Post, id=id, slug=slug)
+
+    products_list = Product.objects.filter(available=True).order_by("-updated_at")
+    productsImage = ProductImage.objects.all()
+    products_list_random = random.sample(list(products_list), min(len(products_list), 5))
 
 
     ip_adress = get_ip(request)
@@ -78,7 +86,7 @@ def post_detail(request, id, slug):
         region=data['region']
 
     address = str(str(city)+'-'+str(country)+'-'+str(region))
-    print("address: ", address)
+    # print("address: ", address)
 
     view, created = PostViewsCount.objects.get_or_create(
         user = str(request.user),
@@ -129,5 +137,7 @@ def post_detail(request, id, slug):
         'post': post,
         'comments': comments,
         'comment_form': form,
+        'products_list_random': products_list_random,
+        'productsImages': productsImage,
     }
     return render(request, 'posts/post_detail.html', context)

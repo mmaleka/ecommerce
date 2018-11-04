@@ -11,20 +11,6 @@ from ipware import get_client_ip
 import json
 from urllib.request import urlopen
 
-#
-# def AddBanner_list(request, category_slug=None):
-#     # adds = AddBanner.objects.all()
-#     adds = get_object_or_404(AddBanner, id=id, slug=slug, available=True)
-#     addsImages = AddBannerImage.objects.all()
-#
-#
-#     context = {
-#         'adds': adds,
-#         'addsImage': addsImage,
-#     }
-#
-#     return render(request, 'addBanner/addDetail.html', context)
-
 
 def AddBanner_detail(request, id, slug):
 

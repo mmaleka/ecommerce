@@ -206,50 +206,16 @@
       </span>
   </div>
 
+  <div class="row justify-content-around">
 
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 recommended-col text-center">
+      <h3>More To Love</h3>
+      <hr class="Recommended_hrLine">
+    </div>
 
+      {% include 'recommended/recommended.html' with products_list_random=products_list_random productsImage=productsImage %}
 
-
-      <!-- Comments Form -->
-      <!-- <div class="thumbnail">
-          <h5 class="card-header">Leave a Comment:</h5>
-          {% if request.user.is_authenticated %}
-
-          <div class="card-body">
-            <form method="POST" action="." enctype="multipart/form-data">{% csrf_token %}
-              {{ comment_form }}
-              <button id="submit" type="submit" class="btn btn-primary">Submit</button>
-            </form>
-          </div>
-
-          {% else %}
-
-          <div class="well well-lg">
-              <h3>You must login to reply</h3>
-          </div>
-
-          {% endif %}
-      </div> -->
-
-
-      <!-- {% for comment in comments %}
-      {% if comment.content %}
-          <p>{{ comment.content }}</p>
-        </div>
-        {% if comment.image %}
-            <img src="{{ comment.image.url }}" class="img-responsive" width="400" height="400">
-        {% endif %}
-      {% else %}
-        <div class="">
-          <p>No Coomments </p>
-        </div>
-      {% endif %}
-      {% endfor %} -->
-
-
-  <!-- <div class="row">
-    {% include 'recommend/recommend.html' %}
-  </div> -->
+  </div>
 
 </div>
 

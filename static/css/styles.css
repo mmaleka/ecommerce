@@ -12,13 +12,18 @@
   /* margin-top: 10px */
 }
 .card-product_list:hover {
-  border: 2px solid lightgrey;
+  /* border: 2px solid lightgrey; */
+}
+
+.discount-off{
+  background-color: #e00013;
+  color: #fff;
+  border-radius: 25px;
 }
 
 .navbar {
   background-color: #0b3e6e;
   color: #EEE5E9;
-  font-family: Poppins;
 }
 
 .navbar-toggler {
@@ -181,6 +186,14 @@ body {
 
 .detail_hrLine{
   border: 1px solid lightgrey;
+}
+
+.Recommended_hrLine {
+  border: 3px solid #0b3e6e;
+}
+
+.recommended-col {
+  padding-top: 50px;
 }
 
 .my_link:link {

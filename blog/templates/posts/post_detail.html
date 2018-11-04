@@ -102,11 +102,27 @@
 
       {% endfor %}
 
+      <div class="pagination mb-3">
+          <span class="step-links">
+              {% if comments.has_previous %}
+                  <a href="?page=1">&laquo; first</a>
+                  <a href="?page={{ comments.previous_page_number }}">previous</a>
+              {% endif %}
+
+              <span class="current">
+                  Page {{ comments.number }} of {{ comments.paginator.num_pages }}.
+              </span>
+
+              {% if comments.has_next %}
+                  <a href="?page={{ comments.next_page_number }}">next</a>
+                  <a href="?page={{ comments.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+          </span>
+      </div>
+
     </div>
 
-
-
-    <div class="col-12 col-sm-4 col-md-4 col-lg-4">
+    <div class="col-12 col-sm-4 col-md-4 col-lg-4 mb-5">
       <div class="card blog_card blog_card1">
         <div class="card-header">
           Popular Posts
@@ -123,23 +139,23 @@
 
   </div>
 
-  <div class="pagination">
-      <span class="step-links">
-          {% if comments.has_previous %}
-              <a href="?page=1">&laquo; first</a>
-              <a href="?page={{ comments.previous_page_number }}">previous</a>
-          {% endif %}
 
-          <span class="current">
-              Page {{ comments.number }} of {{ comments.paginator.num_pages }}.
-          </span>
+  <div class="row justify-content-around">
 
-          {% if comments.has_next %}
-              <a href="?page={{ comments.next_page_number }}">next</a>
-              <a href="?page={{ comments.paginator.num_pages }}">last &raquo;</a>
-          {% endif %}
-      </span>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 recommended-col text-center">
+      <h3>High Quality Products Recommended For You</h3>
+      <hr class="Recommended_hrLine">
+    </div>
+
+    <!-- <div class="col-12 col-sm-12 col-md-12 col-lg-12"> -->
+      {% include 'recommended/recommended.html' with products_list_random=products_list_random productsImage=productsImage %}
+    <!-- </div> -->
+
   </div>
+
+
+
+
 
 
 </div>

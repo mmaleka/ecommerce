@@ -16,6 +16,7 @@ import re
 from ipware import get_client_ip
 import json
 from urllib.request import urlopen
+import random
 
 
 def get_ip(request):
@@ -32,8 +33,6 @@ def get_ip(request):
         ip = ""
 
     return ip
-
-
 
 
 def product_list(request, category_slug=None):
@@ -182,6 +181,10 @@ def product_detail(request, id, slug):
     page = request.GET.get('page')
     comments = paginator.get_page(page)
 
+    products_list = Product.objects.filter(available=True).order_by("-updated_at")
+    # productsImage = ProductImage.objects.all()
+    products_list_random = random.sample(list(products_list), min(len(products_list), 5))
+
     productsImage = ProductImage.objects.all()
     cart_product_form = CartAddProductForm()
     context = {
@@ -191,5 +194,6 @@ def product_detail(request, id, slug):
         'comments': comments,
         'comment_form': form,
         'wishList': wishList_obj_all,
+        'products_list_random': products_list_random,
     }
     return render(request, 'shop/product/detail.html', context)

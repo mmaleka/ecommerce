@@ -58,8 +58,6 @@ try {
 
 function shippingChoices(freeDelivery, payDeliverly) {
   var shipping = document.getElementById('id_shipping');
-  // var payfast = document.getElementById('payfast')[0].setAttribute("amount", 123); ;
-  // console.log(payfast);
   var strUser = shipping.options[shipping.selectedIndex].value;
   if (strUser == 'FD') {
     var get_total_price_with_free_shipping = document.getElementById('get_total_price_with_shipping').innerHTML="R "+freeDelivery;
