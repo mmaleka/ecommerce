@@ -63,7 +63,7 @@ def post_detail(request, id, slug):
 
     products_list = Product.objects.filter(available=True).order_by("-updated_at")
     productsImage = ProductImage.objects.all()
-    products_list_random = random.sample(list(products_list), min(len(products_list), 5))
+    products_list_random = random.sample(list(products_list), min(len(products_list), 4))
 
 
     ip_adress = get_ip(request)
