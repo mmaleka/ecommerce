@@ -33,7 +33,6 @@ def cart_detail(request):
     cartItems = []
     cartProducts = []
     for item in cart:
-        print(item)
         cartItems.append(item)
         for k, v in item.items():
             print(k, v)
