@@ -13,7 +13,7 @@ class AddBannerImageInline(admin.TabularInline):
     extra = 3
 
 class AddBannerAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'created_at', 'updated_at']
+    list_display = ['id', 'name', 'created_at', 'updated_at', 'add_is_active']
     list_filter = ['name', 'created_at', 'updated_at']
     prepopulated_fields = {'slug': ('name',)}
     inlines = [AddBannerImageInline]

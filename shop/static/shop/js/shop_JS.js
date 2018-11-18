@@ -27,19 +27,17 @@ try {
   var i_image = 0;
   var images = [];
   images_href = [];
-  var time = 4000;
+  var time = 5000;
 
   // Image list
-  images[0] = ImageSliderList[0].src;
-  images[1] = ImageSliderList[1].src;
-  images[2] = ImageSliderList[2].src;
+  for (var i_images = 0; i_images < ImageSliderList.length; i_images++) {
+    images[i_images] = ImageSliderList[i_images].src;
+  }
 
   // Image href
-  images_href[0] = ImageSliderList[0].getAttribute("href");
-  images_href[1] = ImageSliderList[1].getAttribute("href");
-  images_href[2] = ImageSliderList[2].getAttribute("href");
-
-  console.log("href: ", ImageSliderList[1].getAttribute("href"));
+  for (var i_images_href = 0; i_images_href < ImageSliderList.length; i_images_href++) {
+    images_href[i_images_href] = ImageSliderList[i_images_href].getAttribute("href");
+  }
 
 } catch (e) {
   console.log("Error", e);
@@ -50,9 +48,7 @@ try {
 function changeImg() {
 
   document.slide.src = images[i_image];
-  // document.slideHref.href = '/10/headsets/';
   var x = document.getElementById("slideHref");
-  console.log(images_href[i_image]);
   x.href = images_href[i_image]
 
   if (i_image < images.length - 1) {
@@ -76,7 +72,6 @@ function stopCount() {
 }
 
 // Chnage Image with button
-
 function changeImgWithButtonForward(x) {
   stopCount()
   document.slide.src = images[i_image];
@@ -93,7 +88,6 @@ function changeImgWithButtonForward(x) {
 }
 
 // Chnage Image with button
-
 function changeImgWithButtonPrev(x) {
   stopCount()
   document.slide.src = images[i_image];
@@ -116,7 +110,6 @@ function changeImgWithButtonPrev(x) {
 
 
 function changeImage(image_id) {
-
   // Change images on the detail page
   ImageDetailList = document.ImageDetailList;
   var images_detailList1ID = document.getElementById(image_id)

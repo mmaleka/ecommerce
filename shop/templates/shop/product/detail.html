@@ -59,9 +59,11 @@
       <hr class="style1">
 
       <h2 class="font-weight-bold text-capitalize text-danger">R {{ product.price }}</h2>
-      <h6 class="my-text">{{ product.stock}} item{{ product.stock|pluralize }} left</h6>
+      <!-- <h6 class="my-text">{{ product.stock}} item{{ product.stock|pluralize }} left</h6> -->
       <h6 class="my-text">Warranty:  {{ product.warranty }}</h6>
-      <h6 class="my-text">Barcode:  {{ product.barcode }}</h6>
+      {% if product.discount > 0 %}
+      <h6 class="text-danger"><b><i>Discount {{ product.discount }}% OFF,</i> <span class="badge">Hurry only {{ product.stock}} item{{ product.stock|pluralize }} left</span></b></h6>
+      {% endif %}
       <h6 class="my-text">Hassle-Free Exchanges & Returns for 30 Days</h6>
 
 

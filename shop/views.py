@@ -39,7 +39,9 @@ def product_list(request, category_slug=None):
     search_term = ''
     category = None
     categories = Category.objects.all()
-    adds = AddBanner.objects.all()
+    adds = AddBanner.objects.filter(add_is_active=True)
+    # adds = AddBanner.objects.all()
+    print("adds: ", adds)
     products_list = Product.objects.filter(available=True).order_by("-updated_at")
     productsImage = ProductImage.objects.all()
 
@@ -181,8 +183,10 @@ def product_detail(request, id, slug):
     page = request.GET.get('page')
     comments = paginator.get_page(page)
 
+    products_list = Product.objects.all()
+    print("products_list: ", products_list)
     products_list = Product.objects.filter(available=True).order_by("-updated_at")
-    # productsImage = ProductImage.objects.all()
+    # productsImage = ProductImage.objects.all() .filter(price>0)
     products_list_random = random.sample(list(products_list), min(len(products_list), 4))
 
     productsImage = ProductImage.objects.all()

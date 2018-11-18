@@ -35,7 +35,7 @@ class Product(models.Model):
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
-    discount = models.CharField(max_length=100, db_index=True, blank=True)
+    discount = models.PositiveIntegerField(blank=True, null=True)
 
     available = models.BooleanField(default=True)
     stock = models.PositiveIntegerField()

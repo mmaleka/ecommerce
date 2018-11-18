@@ -14,28 +14,30 @@
 
 
 {% for products_list_random in products_list_random %}
-  <div class="col-6 col-sm-4 col-md-4 col-lg-3 card-product_list">
-    <a href="{{ products_list_random.get_absolute_url }}">
-      <div class="card h-100 productImage blog_card1">
-        {% for productsImage in productsImages %}
-          {% if productsImage.product.id  == products_list_random.id %}
-            <img id="{{ productsImage.id }}"
-            class="card-img-top img-fluid"
-            src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
-            alt="">
-          {% endif %}
-        {% endfor %}
-        <div class="card-body text-center">
-          <p class="card-title">
-            <a href="{{ products_list_random.get_absolute_url }}">{{ products_list_random.name }}</a>
-          </p>
+  {% if products_list_random.discount > 0 %}
+    <div class="col-6 col-sm-4 col-md-4 col-lg-3 card-product_list">
+      <a href="{{ products_list_random.get_absolute_url }}">
+        <div class="card h-100 productImage blog_card1">
+          {% for productsImage in productsImages %}
+            {% if productsImage.product.id  == products_list_random.id %}
+              <img id="{{ productsImage.id }}"
+              class="card-img-top img-fluid"
+              src="{% if productsImage.image %} {{ productsImage.image.url }} {% else %} {% static 'http://placehold.it/700x400' %} {% endif %}"
+              alt="">
+            {% endif %}
+          {% endfor %}
+          <div class="card-body text-center">
+            <p class="card-title">
+              <a href="{{ products_list_random.get_absolute_url }}">{{ products_list_random.name }}</a>
+            </p>
 
+          </div>
+          <div class="card-footer text-center">
+            <h6 class="discount-off"><b><i>{{ products_list_random.discount }} % OFF</i></b></h6>
+            <h6>R{{ products_list_random.price }}</h6>
+          </div>
         </div>
-        <div class="card-footer text-center">
-          <h6 class="discount-off"><b><i>{{ products_list_random.discount }} OFF</i></b></h6>
-          <h6>R{{ products_list_random.price }}</h6>
-        </div>
-      </div>
-    </a>
-  </div>
+      </a>
+    </div>
+  {% endif %}
 {% endfor %}

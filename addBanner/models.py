@@ -15,6 +15,9 @@ class AddBanner(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='addBanner/%Y/%m/%d', blank=True)
+
+    add_is_active = models.BooleanField(default=True)
+
     description1 = models.TextField(blank=True, null=True)
     description2 = models.TextField(blank=True, null=True)
     description3 = models.TextField(blank=True, null=True)

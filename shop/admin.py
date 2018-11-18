@@ -14,9 +14,9 @@ class ProductImageInline(admin.TabularInline):
     extra = 3
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'slug', 'price', 'stock', 'available', 'created_at', 'updated_at']
+    list_display = ['id', 'name', 'slug', 'price', 'stock', 'available', 'discount', 'created_at', 'updated_at']
     list_filter = ['available', 'created_at', 'updated_at']
-    list_editable = ['price', 'stock', 'available']
+    list_editable = ['price', 'stock', 'available', 'discount']
     prepopulated_fields = {'slug': ('name',)}
     inlines = [ProductImageInline]
 
