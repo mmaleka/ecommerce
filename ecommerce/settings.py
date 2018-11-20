@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import sendgrid
 from django.core.mail.backends.smtp import EmailBackend
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -150,11 +151,15 @@ CART_SESSION_ID = 'cart'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'mpho.maleka3@gmail.com'
+
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'mmaleka'
 EMAIL_HOST_PASSWORD = 'MphoMaleka@@199009086829'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
 
 TINYMCE_DEFAULT_CONFIG = {
     'height': 360,

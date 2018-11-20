@@ -31,7 +31,7 @@ def order_create(request):
             if form.cleaned_data['shipping'] == 'FD':
                 total_price_with_shipping = float(cart.get_total_price_discountTOTAL())
             elif form.cleaned_data['shipping'] == 'PL':
-                total_price_with_shipping = float(cart.get_total_price_discountTOTAL() + float(40))
+                total_price_with_shipping = float(cart.get_total_price_discountTOTAL()) + float(40)
 
             order = form.save(commit=False)
 

@@ -1,8 +1,11 @@
 from django.conf import settings
 from django.core.mail import send_mail
+from django.template.loader import get_template
 from django.shortcuts import render
 from .models import Contact
 from .forms import UserContactForm
+import sendgrid
+import os
 
 
 def contact_view(request):
@@ -24,17 +27,20 @@ def contact_view(request):
 
             # Email ourselves the submitted contact message
 
-            subject  = 'Contact Form Received'
-            from_email = settings.EMAIL_HOST_USER
-            to_email = ['mpho.maleka3@gmail.com']
+            client = settings.SEND_GRID_CLIENT
+            message = settings.SEND_GRID_MESSAGE
 
-            some_html_message = """<p>This is an <strong>important</strong> message.</p>"""
-
-            contact_message = "{0}, from {1} with email {2}".format(message, first_name, email)
-
-            send_mail(subject, contact_message, from_email, to_email, fail_silently=False)
-
-            # send_mail('Subject here', 'Here is the message.', 'mpho.maleka3@gmail.com', ['mpho.maleka3@gmail.com'], fail_silently=False)
+            message.add_to(["Mpho.Maleka@rheinmetall-denelmunition.com", "mpho.maleka3@gmail.com", email])
+            message.set_from("nonreply@gearacademy.co.za")
+            message.set_subject("Thank You For Contacting Us")
+            context = {
+                'first_name': first_name,
+                'email': email,
+                'message': message
+            }
+            contact_message = get_template('contact/contact_message.html').render(context)
+            message.set_html(contact_message)
+            client.send(message)
 
             contact.save()
 
