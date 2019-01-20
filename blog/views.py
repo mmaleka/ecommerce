@@ -103,10 +103,13 @@ def post_detail(request, id, slug):
         "object_id": post.id,
     }
 
+    print("initial_data: ", initial_data)
+
 
     form = CommentForm(request.POST or None, request.FILES or None, initial=initial_data)
     if form.is_valid() and request.user.is_authenticated:
         c_type = form.cleaned_data.get("content_type")
+        print("c_type: ", c_type)
         content_type = ContentType.objects.get(model=c_type)
         obj_id = form.cleaned_data.get("object_id")
         content_data = form.cleaned_data.get("content")

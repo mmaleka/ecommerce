@@ -16,7 +16,6 @@ urlpatterns = [
     url(r'password_change_done/',auth_views.PasswordChangeDoneView.as_view(template_name='registration/password_change_done.html')),
     url(r'password_reset/$',auth_views.PasswordResetView.as_view(template_name='registration/password_reset_form.html',email_template_name='registration/password_reset_email.html',subject_template_name='registration/password_reset_email.txt',success_url='/accounts/password_reset_done/',from_email='mpho.maleka3@gmail.com'), name='password_reset'),
     url(r'password_reset_done/',auth_views.PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html')),
-    # url(r'password_reset_confirm/(?P<uidb64>[0-9A-Za-]+)-(?P<token>.+)/$' ,auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     url(r'password_reset_confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', auth_views.PasswordResetConfirmView.as_view(template_name='registration/password_reset_confirm.html',success_url='/accounts/password_reset_complete/'), name='password_reset_confirm'),
     url(r'password_reset_complete/',auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html')),
 ]

@@ -154,6 +154,8 @@ def product_detail(request, id, slug):
         "object_id": product.id,
     }
 
+    
+
 
     form = CommentForm(request.POST or None, request.FILES or None, initial=initial_data)
     if form.is_valid() and request.user.is_authenticated:
@@ -171,7 +173,7 @@ def product_detail(request, id, slug):
         )
 
         if created:
-            print("yeah")
+            print("yeah....")
 
 
     content_type = ContentType.objects.get_for_model(Product)

@@ -153,12 +153,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'mmaleka'
-EMAIL_HOST_PASSWORD = 'MphoMaleka@@199009086829'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
 
 
 TINYMCE_DEFAULT_CONFIG = {
